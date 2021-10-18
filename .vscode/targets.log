@@ -1,0 +1,359 @@
+make.exe all --print-data-base --no-builtin-variables --no-builtin-rules --question
+# GNU Make 4.2
+This program is built by Equation Solution <http://www.Equation.com>.
+# Copyright (C) 1988-2016 Free Software Foundation, Inc.
+# License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+# This is free software: you are free to change and redistribute it.
+# There is NO WARRANTY, to the extent permitted by law.
+
+# Make data base, printed on Mon Oct 18 17:18:46 2021
+
+# Variables
+
+# 'override' directive
+GNUMAKEFLAGS := 
+# automatic
+<D = $(patsubst %/,%,$(patsubst %\,%,$(dir $<)))
+# automatic
+?F = $(notdir $?)
+# default
+.SHELLFLAGS := -c
+# makefile (from 'makefile', line 4)
+SRC = pipex.c
+# makefile
+MAKEFLAGS = pqrR
+# environment
+VSCODE_LOG_NATIVE = false
+# automatic
+?D = $(patsubst %/,%,$(patsubst %\,%,$(dir $?)))
+# automatic
+@D = $(patsubst %/,%,$(patsubst %\,%,$(dir $@)))
+# environment
+HOMEDRIVE = C:
+# automatic
+@F 
+ = $(notdir $@)
+# automatic
+^D = $(patsubst %/,%,$(patsubst %\,%,$(dir $^)))
+# makefile
+CURDIR := c:/Users/user/Desktop/pipex
+# default
+SHELL := C:/Program Files/Git/usr/bin/sh.exe
+# makefile (from 'makefile', line 7)
+OBJ_SRC = $(SRC:.c=.o)
+# environment
+WINDIR = C:\Windows
+# environment
+VSCODE_NLS_CONFIG = {"locale":"ru","availableLanguages":{"*":"ru"},"_languagePackId":"c0154017eafddd7bab935a6fb1a00e9c.ru","_translationsConfigFile":"C:\\Users\\user\\AppData\\Roaming\\Code\\clp\\c0154017eafddd7bab935a6fb1a00e9c.ru\\tcf.json","_cacheRoot":"C:\\Users\\user\\AppData\\Roaming\\Code\\clp\\c0154017eafddd7bab935a6fb1a00e9c.ru","_resolvedLanguagePackCoreLocation":"C:\\Users\\user\\AppData\\Roaming\\Code\\clp\\c0154017eafddd7bab935a6fb1a00e9c.ru\\ee8c7def80afc00dd6e593ef12f37756d8f504ea","_corruptedFile":"C:\\Users\\user\\AppData\\Roaming\\Code\\clp\\c0154017eafddd7bab935a6fb1a00e9c.ru\\corrupted.info","_languagePackSupport":true}
+# environment
+FP_NO_HOST_CHECK = NO
+# environment
+PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.RB;.RBW
+# makefile (from 'makefile', line 1)
+MAKEFILE_LIST :=  Makefile
+# environment
+TMP = C:\Users\user\AppData\Local\Temp
+# environment
+VSCODE_VERBOSE_LOGGING = true
+# environment
+PROGRAMW6432 = C:\Program Files
+# environment
+PROGRAMDATA = C:\ProgramData
+# environment
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-d67bbd91-8e07-4db9-be90-c3b8bcad6696-sock
+# environment
+VSCODE_CWD = C:\Users\user\AppData\Local\Programs\Microsoft VS Code
+# default
+MAKE_HOST := x86_64-w64-mingw32
+# environment
+PATH = c:\program files\gcc\bin;c:\program files\gcc\libexec\gcc\x86_64-w64-mingw32\8.3.0;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\UCRT\;C:\Program Files\Intel\UCRT\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;D:\�����\Ruby30-x64\bin
+# environment
+SW_SIM_HYDRA = C:\Program Files\Common Files\SolidWorks Shared\Simulation Worker Agent\
+# environment
+COMMONPROGRAMW6432 = C:\Program Files\Common Files
+# environment
+PROCESSOR_ARCHITECTURE = AMD64
+# environment
+USERPROFILE = C:\Users\user
+# environment
+ALLUSERSPROFILE = C:\ProgramData
+# environment
+VSCODE_LOG_STACK = false
+# environment
+NUMBER_OF_PROCESSORS = 8
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# default
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync load
+# automatic
+%F = $(notdir $%)
+# environment
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_7888_ZCHBQOXZHJGFZUIZ
+# environment
+VSCODE_PIPE_LOGGING = true
+# environment
+COMPUTERNAME = W034206
+# environment
+EQ_LIBRARY_PATH = c:\program files\gcc\x86_64-w64-mingw32\lib
+# environment
+PROGRAMFILES = C:\Program Files
+# default
+.LOADED := 
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = undefined
+# environment
+USERNAME = user
+# environment
+PUBLIC = C:\Users\Public
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/services/extensions/node/extensionHostProcess
+# environment
+VSCODE_CODE_CACHE_PATH = C:\Users\user\AppData\Roaming\Code\CachedData\ee8c7def80afc00dd6e593ef12f37756d8f504ea
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+# environment
+COMMONPROGRAMFILES = C:\Program Files\Common Files
+# environment
+LOGONSERVER = \\W034206
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# environment
+USERDOMAIN = w034206
+# environment
+MAKELEVEL := 0
+# default
+MAKE = $(MAKE_COMMAND)
+# default
+MAKECMDGOALS := all
+# makefile (from 'makefile', line 2)
+LIBFT = libft.a
+# default
+MAKE_VERSION := 4.2
+# makefile
+.DEFAULT_GOAL := all
+# makefile (from 'makefile', line 1)
+NAME = pipex
+# environment
+PROGRAMFILES(X86) = C:\Program Files (x86)
+# automatic
+%D = $(patsubst %/,%,$(patsubst %\,%,$(dir $%)))
+# environment
+LOCALAPPDATA = C:\Users\user\AppData\Local
+# environment
+PSMODULEPATH = C:\Windows\system32\WindowsPowerShell\v1.0\Modules\
+# default
+MAKE_COMMAND := make.exe
+# default
+.VARIABLES := 
+# automatic
+*F = $(notdir $*)
+# environment
+PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 158 Stepping 9, GenuineIntel
+# environment
+OS = Windows_NT
+# environment
+VSCODE_IPC_HOOK = \\.\pipe\680802a3ebd40da3f83beb9d3e841b70-1.61.0-main-sock
+# environment
+HOMEPATH = \Users\user
+# environment
+COMMONPROGRAMFILES(X86) = C:\Program Files (x86)\Common Files
+# environment
+PROMPT = $P$G
+# environment
+MFLAGS = -pqrR
+# automatic
+*D = $(patsubst %/,%,$(patsubst %\,%,$(dir $*)))
+# environment
+SYSTEMROOT = C:\Windows
+# automatic
++D = $(patsubst %/,%,$(patsubst %\,%,$(dir $+)))
+# automatic
++F = $(notdir $+)
+# environment
+WINDOWS_TRACING_LOGFILE = C:\BVTBin\Tests\installpackage\csilogfile.log
+# environment
+APPDATA = C:\Users\user\AppData\Roaming
+# environment
+TEMP = C:\Users\user\AppData\Local\Temp
+# environment
+COMSPEC = C:\Windows\system32\cmd.exe
+# default
+MAKEFILES := 
+# automatic
+<F = $(notdir $<)
+# environment
+WINDOWS_TRACING_FLAGS = 3
+# environment
+LC_ALL = C
+# makefile (from 'makefile', line 6)
+HEADER = pipex.h
+# environment
+SW_SIM_TEMP = C:\ProgramData\SOLIDWORKS\SW_net_sim_temp\
+# automatic
+^F = $(notdir $^)
+# default
+SUFFIXES := 
+# environment
+SYSTEMDRIVE = C:
+# environment
+SESSIONNAME = Console
+# makefile (from 'makefile', line 9)
+FLAGS = -Wall -Werror -Wextra
+# environment
+PROCESSOR_REVISION = 9e09
+# environment
+SW_SIM_MPIT = INTELMPI
+# default
+.RECIPEPREFIX := 
+# makefile (from 'makefile', line 10)
+INC_PATH = libft
+# environment
+LANG = C
+# environment
+PROCESSOR_LEVEL = 6
+# environment
+VSCODE_PID = 7888
+# variable set hash-table stats:
+# Load=101/1024=10%, Rehash=0, Collisions=15/132=11%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# . (key c:/Users/user/Desktop/pipex, mtime 1634554014ll): 9 files, no impossibilities.
+
+# 9 files, no impossibilities in 1 directories.
+
+# Implicit Rules
+
+%.o: %.c
+#  recipe to execute (from 'makefile', line 21):
+	@gcc $(FLAGS) -I $(INC_PATH) -c $< -o $@
+
+# 1 implicit rules, 0 (0,0%) terminal.
+
+# Files
+
+all: libft.a pipex
+#  Phony target (prerequisite of .PHONY).
+#  Command line target.
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/3=0%
+
+.PHONY: clean fclean all re
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+libft.a:
+#  Implicit rule search has not been done.
+#  Implicit/static pattern stem: ''
+#  File does not exist.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# automatic
+# @ := libft.a
+# automatic
+# % := 
+# automatic
+# * := 
+# automatic
+# + := 
+# automatic
+# | := 
+# automatic
+# < := 
+# automatic
+# ^ := 
+# automatic
+# ? := 
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=1/11=9%
+#  recipe to execute (from 'makefile', line 15):
+	@make -C libft
+
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  Last modified 2021-10-18 16:34:16
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+pipex.h:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+fclean: clean
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 28):
+	@make fclean -C $(INC_PATH)
+	@rm $(NAME)
+
+# Not a target:
+.SUFFIXES:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+re: fclean all
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+
+clean:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 24):
+	@make clean -C $(INC_PATH)
+	@rm $(OBJ_SRC)
+
+# Not a target:
+pipex.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+pipex: pipex.o pipex.h Makefile libft.a
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 18):
+	gcc $(OBJ_SRC) -L $(INC_PATH) -l (LIBFT) -o $(NAME)
+
+# files hash-table stats:
+# Load=12/1024=1%, Rehash=0, Collisions=0/39=0%
+# VPATH Search Paths
+
+# No 'vpath' search paths.
+
+# No general ('VPATH' variable) search path.
+
+# strcache buffers: 1 (0) / strings = 21 / storage = 131 B / avg = 6 B
+# current buf: size = 8162 B / used = 131 B / count = 21 / avg = 6 B
+
+# strcache performance: lookups = 45 / hit rate = 53%
+# hash-table stats:
+# Load=21/8192=0%, Rehash=0, Collisions=1/45=2%
+# Finished Make data base on Mon Oct 18 17:18:46 2021
+
+ 
