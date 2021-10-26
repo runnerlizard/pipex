@@ -6,7 +6,7 @@ This program is built by Equation Solution <http://www.Equation.com>.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon Oct 18 17:18:46 2021
+# Make data base, printed on Tue Oct 26 14:21:05 2021
 
 # Variables
 
@@ -44,7 +44,7 @@ OBJ_SRC = $(SRC:.c=.o)
 # environment
 WINDIR = C:\Windows
 # environment
-VSCODE_NLS_CONFIG = {"locale":"ru","availableLanguages":{"*":"ru"},"_languagePackId":"c0154017eafddd7bab935a6fb1a00e9c.ru","_translationsConfigFile":"C:\\Users\\user\\AppData\\Roaming\\Code\\clp\\c0154017eafddd7bab935a6fb1a00e9c.ru\\tcf.json","_cacheRoot":"C:\\Users\\user\\AppData\\Roaming\\Code\\clp\\c0154017eafddd7bab935a6fb1a00e9c.ru","_resolvedLanguagePackCoreLocation":"C:\\Users\\user\\AppData\\Roaming\\Code\\clp\\c0154017eafddd7bab935a6fb1a00e9c.ru\\ee8c7def80afc00dd6e593ef12f37756d8f504ea","_corruptedFile":"C:\\Users\\user\\AppData\\Roaming\\Code\\clp\\c0154017eafddd7bab935a6fb1a00e9c.ru\\corrupted.info","_languagePackSupport":true}
+VSCODE_NLS_CONFIG = {"locale":"ru","availableLanguages":{"*":"ru"},"_languagePackId":"c0154017eafddd7bab935a6fb1a00e9c.ru","_translationsConfigFile":"C:\\Users\\user\\AppData\\Roaming\\Code\\clp\\c0154017eafddd7bab935a6fb1a00e9c.ru\\tcf.json","_cacheRoot":"C:\\Users\\user\\AppData\\Roaming\\Code\\clp\\c0154017eafddd7bab935a6fb1a00e9c.ru","_resolvedLanguagePackCoreLocation":"C:\\Users\\user\\AppData\\Roaming\\Code\\clp\\c0154017eafddd7bab935a6fb1a00e9c.ru\\6cba118ac49a1b88332f312a8f67186f7f3c1643","_corruptedFile":"C:\\Users\\user\\AppData\\Roaming\\Code\\clp\\c0154017eafddd7bab935a6fb1a00e9c.ru\\corrupted.info","_languagePackSupport":true}
 # environment
 FP_NO_HOST_CHECK = NO
 # environment
@@ -60,7 +60,7 @@ PROGRAMW6432 = C:\Program Files
 # environment
 PROGRAMDATA = C:\ProgramData
 # environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-d67bbd91-8e07-4db9-be90-c3b8bcad6696-sock
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-060fe805-b266-4bab-8ff0-d593509c01d4-sock
 # environment
 VSCODE_CWD = C:\Users\user\AppData\Local\Programs\Microsoft VS Code
 # default
@@ -88,7 +88,7 @@ ELECTRON_RUN_AS_NODE = 1
 # automatic
 %F = $(notdir $%)
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_7888_ZCHBQOXZHJGFZUIZ
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_5336_DNTCSISYCPACOCSU
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
@@ -108,7 +108,7 @@ PUBLIC = C:\Users\Public
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/services/extensions/node/extensionHostProcess
 # environment
-VSCODE_CODE_CACHE_PATH = C:\Users\user\AppData\Roaming\Code\CachedData\ee8c7def80afc00dd6e593ef12f37756d8f504ea
+VSCODE_CODE_CACHE_PATH = C:\Users\user\AppData\Roaming\Code\CachedData\6cba118ac49a1b88332f312a8f67186f7f3c1643
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
@@ -152,7 +152,7 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 158 Stepping 9, GenuineIntel
 # environment
 OS = Windows_NT
 # environment
-VSCODE_IPC_HOOK = \\.\pipe\680802a3ebd40da3f83beb9d3e841b70-1.61.0-main-sock
+VSCODE_IPC_HOOK = \\.\pipe\680802a3ebd40da3f83beb9d3e841b70-1.61.2-main-sock
 # environment
 HOMEPATH = \Users\user
 # environment
@@ -212,7 +212,7 @@ LANG = C
 # environment
 PROCESSOR_LEVEL = 6
 # environment
-VSCODE_PID = 7888
+VSCODE_PID = 5336
 # variable set hash-table stats:
 # Load=101/1024=10%, Rehash=0, Collisions=15/132=11%
 
@@ -222,9 +222,9 @@ VSCODE_PID = 7888
 
 # Directories
 
-# . (key c:/Users/user/Desktop/pipex, mtime 1634554014ll): 9 files, no impossibilities.
+# . (key c:/Users/user/Desktop/pipex, mtime 1634900998ll): 12 files, no impossibilities.
 
-# 9 files, no impossibilities in 1 directories.
+# 12 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -348,12 +348,12 @@ pipex: pipex.o pipex.h Makefile libft.a
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 21 / storage = 131 B / avg = 6 B
-# current buf: size = 8162 B / used = 131 B / count = 21 / avg = 6 B
+# strcache buffers: 1 (0) / strings = 24 / storage = 153 B / avg = 6 B
+# current buf: size = 8162 B / used = 153 B / count = 24 / avg = 6 B
 
-# strcache performance: lookups = 45 / hit rate = 53%
+# strcache performance: lookups = 48 / hit rate = 50%
 # hash-table stats:
-# Load=21/8192=0%, Rehash=0, Collisions=1/45=2%
-# Finished Make data base on Mon Oct 18 17:18:46 2021
+# Load=24/8192=0%, Rehash=0, Collisions=1/48=2%
+# Finished Make data base on Tue Oct 26 14:21:05 2021
 
  
