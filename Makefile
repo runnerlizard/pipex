@@ -15,7 +15,7 @@ $(LIBFT):
 	@make -C libft
 
 $(NAME): $(OBJ_SRC) $(HEADER) Makefile $(LIBFT)
-	gcc $(OBJ_SRC) -L $(INC_PATH) -l (LIBFT) -o $(NAME)
+	gcc $(OBJ_SRC) ./$(INC_PATH)/$(LIBFT) -o $(NAME)
 
 %.o:	%.c
 	@gcc $(FLAGS) -I $(INC_PATH) -c $< -o $@

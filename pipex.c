@@ -1,24 +1,29 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/types.h>
+#include "pipex.h"
 
-int main (int argc, const char *argv[])
+int main (int argc, char *argv[])
 {
-	const char	*newargv[argc];
-	const char	*newenviron[] = { NULL };
-	int			i;
+	char	*newargv[argc];
+	int		i;
+	int		file;
 
+	if (argc != 5)
+	return (1);
+	file = open("my.sh", O_WRONLY, 0777);
+	ft_putstr_fd("#!/bin/bash\n< ", file);
+	ft_putstr_fd(argv[1], file);
+	ft_putstr_fd(" ", file);
+	ft_putstr_fd(argv[2], file);
+	ft_putstr_fd(" | ", file);
+	ft_putstr_fd(argv[3], file);
+	ft_putstr_fd(" > ", file);
+	ft_putstr_fd(argv[4], file);
 	i = 0;
-	while (argv)
-		newargv[i++] = argv
-	if (_execve(argv[1], newargv, newenviron) == -1)
+	while (argv[++i])
+		newargv[i - 1] = argv[i];
+	newargv[i - 1] = NULL;
+	i = 0;
+	if (execve("my.sh", newargv, NULL) == -1)
 		perror("Cant execute\n");
 	printf("Error\n");
-	/*int	id = fork();
-	if (id != 0)
-		printf("Parent here!\n");
-	if (id == 0)
-		printf("Child here!\n");*/
-	exit(1);
+	exit(argc);
 }
