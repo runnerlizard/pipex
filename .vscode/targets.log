@@ -6,7 +6,7 @@ This program is built by Equation Solution <http://www.Equation.com>.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Oct 26 14:21:05 2021
+# Make data base, printed on Wed Oct 27 10:33:44 2021
 
 # Variables
 
@@ -18,7 +18,7 @@ GNUMAKEFLAGS :=
 ?F = $(notdir $?)
 # default
 .SHELLFLAGS := -c
-# makefile (from 'makefile', line 4)
+# makefile (from 'makefile', line 3)
 SRC = pipex.c
 # makefile
 MAKEFLAGS = pqrR
@@ -39,7 +39,7 @@ HOMEDRIVE = C:
 CURDIR := c:/Users/user/Desktop/pipex
 # default
 SHELL := C:/Program Files/Git/usr/bin/sh.exe
-# makefile (from 'makefile', line 7)
+# makefile (from 'makefile', line 5)
 OBJ_SRC = $(SRC:.c=.o)
 # environment
 WINDIR = C:\Windows
@@ -60,7 +60,7 @@ PROGRAMW6432 = C:\Program Files
 # environment
 PROGRAMDATA = C:\ProgramData
 # environment
-VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-060fe805-b266-4bab-8ff0-d593509c01d4-sock
+VSCODE_IPC_HOOK_EXTHOST = \\.\pipe\vscode-ipc-23b00e3e-2b5c-4054-8c8c-dc600907e29a-sock
 # environment
 VSCODE_CWD = C:\Users\user\AppData\Local\Programs\Microsoft VS Code
 # default
@@ -88,7 +88,7 @@ ELECTRON_RUN_AS_NODE = 1
 # automatic
 %F = $(notdir $%)
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_5336_DNTCSISYCPACOCSU
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_7428_QIETQGGNMTUWRAPW
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
@@ -125,8 +125,6 @@ MAKELEVEL := 0
 MAKE = $(MAKE_COMMAND)
 # default
 MAKECMDGOALS := all
-# makefile (from 'makefile', line 2)
-LIBFT = libft.a
 # default
 MAKE_VERSION := 4.2
 # makefile
@@ -185,8 +183,6 @@ MAKEFILES :=
 WINDOWS_TRACING_FLAGS = 3
 # environment
 LC_ALL = C
-# makefile (from 'makefile', line 6)
-HEADER = pipex.h
 # environment
 SW_SIM_TEMP = C:\ProgramData\SOLIDWORKS\SW_net_sim_temp\
 # automatic
@@ -197,7 +193,7 @@ SUFFIXES :=
 SYSTEMDRIVE = C:
 # environment
 SESSIONNAME = Console
-# makefile (from 'makefile', line 9)
+# makefile (from 'makefile', line 7)
 FLAGS = -Wall -Werror -Wextra
 # environment
 PROCESSOR_REVISION = 9e09
@@ -205,16 +201,14 @@ PROCESSOR_REVISION = 9e09
 SW_SIM_MPIT = INTELMPI
 # default
 .RECIPEPREFIX := 
-# makefile (from 'makefile', line 10)
-INC_PATH = libft
 # environment
 LANG = C
 # environment
 PROCESSOR_LEVEL = 6
 # environment
-VSCODE_PID = 5336
+VSCODE_PID = 7428
 # variable set hash-table stats:
-# Load=101/1024=10%, Rehash=0, Collisions=15/132=11%
+# Load=98/1024=10%, Rehash=0, Collisions=15/127=12%
 
 # Pattern-specific Variable Values
 
@@ -222,21 +216,21 @@ VSCODE_PID = 5336
 
 # Directories
 
-# . (key c:/Users/user/Desktop/pipex, mtime 1634900998ll): 12 files, no impossibilities.
+# . (key c:/Users/user/Desktop/pipex, mtime 1635319898ll): 12 files, no impossibilities.
 
 # 12 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
 %.o: %.c
-#  recipe to execute (from 'makefile', line 21):
-	@gcc $(FLAGS) -I $(INC_PATH) -c $< -o $@
+#  recipe to execute (from 'makefile', line 15):
+	@gcc $(FLAGS) -c $< -o $@
 
 # 1 implicit rules, 0 (0,0%) terminal.
 
 # Files
 
-all: libft.a pipex
+all: pipex
 #  Phony target (prerequisite of .PHONY).
 #  Command line target.
 #  Implicit rule search has not been done.
@@ -244,7 +238,7 @@ all: libft.a pipex
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/3=0%
+# Load=0/32=0%, Rehash=0, Collisions=0/4=0%
 
 .PHONY: clean fclean all re
 #  Implicit rule search has not been done.
@@ -257,60 +251,27 @@ all: libft.a pipex
 #  Modification time never checked.
 #  File has not been updated.
 
-libft.a:
-#  Implicit rule search has not been done.
-#  Implicit/static pattern stem: ''
-#  File does not exist.
-#  File has been updated.
-#  Needs to be updated (-q is set).
-# automatic
-# @ := libft.a
-# automatic
-# % := 
-# automatic
-# * := 
-# automatic
-# + := 
-# automatic
-# | := 
-# automatic
-# < := 
-# automatic
-# ^ := 
-# automatic
-# ? := 
-# variable set hash-table stats:
-# Load=8/32=25%, Rehash=0, Collisions=1/11=9%
-#  recipe to execute (from 'makefile', line 15):
-	@make -C libft
-
 # Not a target:
-Makefile:
+pipex.c:
 #  Implicit rule search has been done.
-#  Last modified 2021-10-18 16:34:16
+#  Last modified 2021-10-27 10:32:16
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
-pipex.h:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+Makefile:
+#  Implicit rule search has been done.
+#  Last modified 2021-10-27 10:33:43
+#  File has been updated.
+#  Successfully updated.
 
 fclean: clean
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'makefile', line 28):
-	@make fclean -C $(INC_PATH)
+#  recipe to execute (from 'makefile', line 21):
 	@rm $(NAME)
-
-# Not a target:
-.SUFFIXES:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 re: fclean all
 #  Phony target (prerequisite of .PHONY).
@@ -323,37 +284,60 @@ clean:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'makefile', line 24):
-	@make clean -C $(INC_PATH)
+#  recipe to execute (from 'makefile', line 18):
 	@rm $(OBJ_SRC)
 
-# Not a target:
-pipex.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+pipex.o: pipex.c
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'pipex'
+#  File does not exist.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# automatic
+# @ := pipex.o
+# automatic
+# % := 
+# automatic
+# * := pipex
+# automatic
+# + := pipex.c
+# automatic
+# | := 
+# automatic
+# < := pipex.c
+# automatic
+# ^ := pipex.c
+# automatic
+# ? := pipex.c
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=1/14=7%
+#  recipe to execute (from 'makefile', line 15):
+	@gcc $(FLAGS) -c $< -o $@
 
-pipex: pipex.o pipex.h Makefile libft.a
+pipex: pipex.o Makefile
 #  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'makefile', line 18):
-	gcc $(OBJ_SRC) -L $(INC_PATH) -l (LIBFT) -o $(NAME)
+#  File does not exist.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/4=0%
+#  recipe to execute (from 'makefile', line 12):
+	gcc $(OBJ_SRC) -o $(NAME)
 
 # files hash-table stats:
-# Load=12/1024=1%, Rehash=0, Collisions=0/39=0%
+# Load=11/1024=1%, Rehash=0, Collisions=0/36=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 24 / storage = 153 B / avg = 6 B
-# current buf: size = 8162 B / used = 153 B / count = 24 / avg = 6 B
+# strcache buffers: 1 (0) / strings = 23 / storage = 146 B / avg = 6 B
+# current buf: size = 8162 B / used = 146 B / count = 23 / avg = 6 B
 
-# strcache performance: lookups = 48 / hit rate = 50%
+# strcache performance: lookups = 45 / hit rate = 48%
 # hash-table stats:
-# Load=24/8192=0%, Rehash=0, Collisions=1/48=2%
-# Finished Make data base on Tue Oct 26 14:21:05 2021
+# Load=23/8192=0%, Rehash=0, Collisions=1/45=2%
+# Finished Make data base on Wed Oct 27 10:33:44 2021
 
  

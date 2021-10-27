@@ -1,9 +1,7 @@
 make.exe --dry-run --keep-going --print-directory
 make.exe: Entering directory 'c:/Users/user/Desktop/pipex'
-make -C libft
+gcc -Wall -Werror -Wextra -c pipex.c -o pipex.o
+gcc pipex.o -o pipex
  
-gcc -Wall -Werror -Wextra -I libft -c pipex.c -o pipex.o
- 
-gcc pipex.o -L libft -l (LIBFT) -o pipex
 make.exe: Leaving directory 'c:/Users/user/Desktop/pipex'
  

@@ -1,32 +1,32 @@
 NAME = pipex
-LIBFT = libft.a
+NAME_BONUS = pipex_bonus
 
 SRC = pipex.c
+SRC_BONUS = pipex_bonus.c
 
-HEADER = pipex.h
-OBJ_SRC = $(SRC:.c=.o)
+OBJ = $(SRC:.c=.o)
+OBJ_BONUS = $(SRC_BONUS:.c=.o)
 
 FLAGS = -Wall -Werror -Wextra
-INC_PATH = libft
 
-all: $(LIBFT) $(NAME) 
+all: $(NAME) 
 
-$(LIBFT):
-	@make -C libft
+bonus: $(NAME_BONUS)
 
-$(NAME): $(OBJ_SRC) $(HEADER) Makefile $(LIBFT)
-	gcc $(OBJ_SRC) ./$(INC_PATH)/$(LIBFT) -o $(NAME)
+$(NAME): $(OBJ) Makefile
+	gcc $(OBJ) -o $(NAME)
+
+$(NAME_BONUS): $(OBJ_BONUS) Makefile
+	gcc $(OBJ_BONUS) -o $(NAME_BONUS)
 
 %.o:	%.c
-	@gcc $(FLAGS) -I $(INC_PATH) -c $< -o $@
+	@gcc $(FLAGS) -c $< -o $@
 
 clean:
-	@make clean -C $(INC_PATH)
-	@rm $(OBJ_SRC)
+	@rm $(OBJ) $(OBJ_BONUS)
 
 fclean:	clean
-	@make fclean -C $(INC_PATH)
-	@rm $(NAME)
+	@rm $(NAME) $(NAME_BONUS)
 
 re: fclean all
 
