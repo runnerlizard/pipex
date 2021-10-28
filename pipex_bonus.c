@@ -45,10 +45,12 @@ static void	handle_and(char *argv[], int file)
 	ft_putstr_fd(argv[5], file);
 }
 
-static void	handle_multiple(int argc, char *argv[], int file)
+static int	handle_multiple(int argc, char *argv[], int file)
 {
 	int	i;
 
+	if (argc != 6)
+		return (ft_putstr_fd("Wrong arguments. Must be 5.\n", 1));
 	ft_putstr_fd("< ", file);
 	ft_putstr_fd(argv[1], file);
 	ft_putstr_fd(" ", file);
@@ -61,6 +63,7 @@ static void	handle_multiple(int argc, char *argv[], int file)
 	ft_putstr_fd(argv[i++], file);
 	ft_putstr_fd(" > ", file);
 	ft_putstr_fd(argv[i], file);
+	return (0);
 }
 
 int main (int argc, char *argv[])
@@ -70,11 +73,14 @@ int main (int argc, char *argv[])
 	int		file;
 
 	if (argc < 5)
-		return (ft_putstr_fd("Wrong arguments\n", 1));
+		return (ft_putstr_fd("Wrong arguments. Must be 4 or more.\n", 1));
 	file = open("my.sh", O_TRUNC | O_WRONLY | O_CREAT, 0777);
 	ft_putstr_fd("#!/bin/bash\n", file);
 	if (ft_strcmp(argv[1], "here_doc") == 0)
-		handle_and(argv, file);
+	{
+		if (handle_and(argv, file) > 0)
+			exit(1);
+	}
 	else
 		handle_multiple(argc, argv, file);
 	ft_putstr_fd("\nrm my.sh", file);
