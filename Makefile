@@ -23,10 +23,10 @@ $(NAME_BONUS): $(OBJ_BONUS) Makefile
 	@gcc $(FLAGS) -c $< -o $@
 
 clean:
-	@rm $(OBJ) $(OBJ_BONUS)
+	@rm -f $(OBJ) $(OBJ_BONUS)
 
 fclean:	clean
-	@rm $(NAME) $(NAME_BONUS)
+	@rm -f $(NAME) $(NAME_BONUS)
 
 re: fclean all
 

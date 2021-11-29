@@ -14,6 +14,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <errno.h>
+#include <string.h>
 
 static int	ft_putstr_fd(char *s, int fd)
 {
@@ -40,16 +42,35 @@ static void	handle_pipex(char *argv[], int file)
 	ft_putstr_fd("\nrm z.sh", file);
 }
 
+static int check_args(int argc, char **argv, char **newargv)
+{
+	if (argc != 5)
+		return (ft_putstr_fd("Error: must be 4 arguments.\n", 1));
+	if (access(argv[1], 1) != 0)
+	{
+		perror(argv[1]);
+		return (1);
+	}
+	if ((access(argv[4], 0) == 0) && (access(argv[4], 2) != 0))
+	{
+		perror(argv[1]);
+		return (1);
+	}
+	if (!(newargv = malloc(sizeof(char *) * argc)))
+		return (ft_putstr_fd("Error: malloc failed.\n", 1));
+	return (0);	
+}
+
 int	main(int argc, char *argv[])
 {
 	char	**newargv;
 	int		i;
 	int		file;
 
-	if (argc != 5)
-		return (ft_putstr_fd("Wrong arguments\n", 1));
-	newargv = malloc(sizeof(char *) * argc);
-	file = open("z.sh", O_TRUNC | O_WRONLY | O_CREAT, 0777);
+	newargv = NULL;
+	if (check_args(argc, argv, newargv) != 0)
+		return (1);
+	file = open(argv[1], O_RDONLY);
 	handle_pipex(argv, file);
 	i = 0;
 	while (argv[++i])
