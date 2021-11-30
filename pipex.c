@@ -16,6 +16,7 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <string.h>
+#include <sys/wait.h>
 
 static int	ft_putstr_fd(char *s, int fd)
 {
@@ -28,7 +29,7 @@ static int	ft_putstr_fd(char *s, int fd)
 		write (fd, &s[i++], 1);
 	return (i);
 }
-
+/*
 static void	handle_pipex(char *argv[], int file)
 {
 	ft_putstr_fd("#!/bin/bash\n< ", file);
@@ -60,17 +61,61 @@ static int check_args(int argc, char **argv, char **newargv)
 		return (ft_putstr_fd("Error: malloc failed.\n", 1));
 	return (0);	
 }
-
+*/
 int	main(int argc, char *argv[])
 {
-	char	**newargv;
-	int		i;
-	int		file;
+/*	char	**newargv;
+	int		id;
+	int		fd[2];
+	char	*x;
+	char	*y;
 
 	newargv = NULL;
 	if (check_args(argc, argv, newargv) != 0)
 		return (1);
-	file = open(argv[1], O_RDONLY);
+	//fd[0] = open(argv[1], O_RDONLY);
+	if (!pipe(fd))
+	{	
+		id = fork();
+		if (id == -1)
+		{
+			perror ("fork");
+			return (1);
+		}
+		if (id == 0)
+		{
+			if (close(fd[0]))
+				perror("close\n");
+			x = "From child";
+			if (write(fd[1], &x, sizeof(x)) == -1)
+			{
+				perror("write\n");
+				return (1);
+			}
+			if (close(fd[1]))
+				perror("close\n");
+		}
+		else
+		{
+			if (close(fd[1]))
+				perror("close\n");
+			if (read(fd[0], &y, sizeof(y)) == -1)
+			{
+				perror("read\n");
+				return (1);
+			}
+			if (close(fd[0]))
+				perror("close\n");
+			printf("Got %s\n", y);
+		}
+	}
+	else
+	{
+		perror ("pipe");
+		return (1);
+	}
+	
+	
 	handle_pipex(argv, file);
 	i = 0;
 	while (argv[++i])
@@ -80,6 +125,27 @@ int	main(int argc, char *argv[])
 	if (execve("z.sh", newargv, NULL) == -1)
 		perror("Cant execute\n");
 	ft_putstr_fd("Error\n", 1);
-	free(newargv);
+	
+	while (!(wait(0)) || (errno != ECHILD))
+		;
+	free(newargv);*/
+	int	pid;
+	char **args;
+	args = malloc(sizeof(char *) * 5);
+	args[0] = "ping";
+	args[1]  = "google.cotm";
+	args[2] = NULL;
+ 
+	pid = fork();
+	if (pid == 0)
+	{
+		execve("/usr/bin/ping", args, NULL);
+		ft_putstr_fd("didnt happened\n", 1);
+	}
+	else
+	{
+		wait(NULL);
+		ft_putstr_fd(argv[1], 1);
+	}
 	return (argc);
 }
