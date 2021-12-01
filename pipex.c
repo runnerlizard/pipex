@@ -11,24 +11,13 @@
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include "ft_printf.h"
+
 #include <fcntl.h>
 #include <errno.h>
 #include <string.h>
 #include <sys/wait.h>
 
-static int	ft_putstr_fd(char *s, int fd)
-{
-	size_t	i;
-
-	i = 0;
-	if (s == NULL)
-		return (ft_putstr_fd ("(null)", 1));
-	while (s[i])
-		write (fd, &s[i++], 1);
-	return (i);
-}
 /*
 static void	handle_pipex(char *argv[], int file)
 {

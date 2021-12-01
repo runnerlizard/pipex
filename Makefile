@@ -1,10 +1,10 @@
-NAME = philo
-NAME_BONUS = philo_bonus
+NAME = pipex
+NAME_BONUS = pipex_bonus
 LIBFT = libft/libft.a
 PRINTF = printf/libftprintf.a
 
-SRC = philo.c
-SRC_BONUS = ./philo_bonus/philo_bonus.c
+SRC = pipex.c
+SRC_BONUS = pipex_bonus.c
 
 OBJ = $(SRC:.c=.o)
 OBJ_BONUS = $(SRC_BONUS:.c=.o)
@@ -22,13 +22,13 @@ $(PRINTF):
 	make -C printf
 
 $(NAME): $(OBJ) Makefile $(LIBFT) $(PRINTF)
-	gcc $(OBJ) -L./libft -lft -L./printf -lftprintf -o $(NAME) -pthread
+	gcc $(OBJ) -L./libft -lft -L./printf -lftprintf -o $(NAME)
 
 $(NAME_BONUS): $(OBJ_BONUS) Makefile $(LIBFT)
-	gcc $(OBJ_BONUS) -L./libft -lft -L./printf -lftprintf -o $(NAME_BONUS) -pthread
+	gcc $(OBJ_BONUS) -L./libft -lft -L./printf -lftprintf -o $(NAME_BONUS)
 
 %.o:	%.c
-	gcc $(FLAGS) -I libft -I printf -c $< -o $@ -pthread
+	gcc $(FLAGS) -I libft -I printf -c $< -o $@
 
 clean:
 	make clean -sC libft
