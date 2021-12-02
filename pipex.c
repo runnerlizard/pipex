@@ -10,33 +10,41 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include "ft_printf.h"
-#include "libft.h"
-#include <fcntl.h>
-#include <errno.h>
-#include <string.h>
-#include <sys/wait.h>
+#include "pipex.h"
 
-int	main(int argc, char *argv[])
+static int check_init_args(t_pipex *p, int argc, char **argv)
 {
-	int		*n;
-	char	***cmd;
+	int		i;
 
 	if (argc != 5)
 		return (1);
-	if (!(n = malloc(sizeof(int) * 2)))
-		return (ft_putstr_fd("Malloc error.\n", 1));
-	if (!(cmd = malloc(sizeof(**cmd) * (argc - 2))))
+	p->file1 = open(argv[1], O_RDONLY);
+	if (p->file1 < 0)
+		return(ft_printf("%s: %s\n", argv[1], strerror(errno)));
+	p->file2 = open(argv[4], O_TRUNC | O_CREAT | O_WRONLY, 0664);
+	if (p->file2 < 0)
+		return(ft_printf("%s: %s\n", argv[4], strerror(errno)));
+	if (!(p->cmd = malloc(sizeof(**p->cmd) * (argc - 2))))
 		return (ft_putstr_fd("Malloc error 1.\n", 1));
-	n[0] = -1;
-	while (++n[0] < argc - 3)
-		if (!(cmd[n[0]] = ft_split(argv[2 + n[0]], ' ')))
+	i = -1;
+	while (++i < argc - 3)
+		if (!(p->cmd[i] = ft_split(argv[2 + i], ' ')))
 			return (ft_putstr_fd("Malloc error 2.\n", 1));
-	n[1]= fork();
-	if (n[1] == 0)
+	return (0);
+}
+
+int	main(int argc, char *argv[])
+{
+	t_pipex	*p;
+	
+	if (!(p = malloc(sizeof(p))))
+		return (ft_putstr_fd("Malloc error.\n", 1));
+	if (check_init_args(p, argc, argv))
+		return (0);
+	p->pid = fork();
+	if (p->pid == 0)
 	{
-		execve(ft_strjoin("/usr/bin/", cmd[0][0]), cmd[0], NULL);
+		execve(ft_strjoin("/usr/bin/", p->cmd[0][0]), p->cmd[0], NULL);
 		ft_putstr_fd("didnt happened\n", 1);
 	}
 	else
@@ -44,7 +52,7 @@ int	main(int argc, char *argv[])
 		wait(NULL);
 		ft_putstr_fd("\nDone\n", 1);
 	}
-	return (argc);
+	return (0);
 
 
 	/*	char	**newargv;

@@ -11,9 +11,9 @@ OBJ_BONUS = $(SRC_BONUS:.c=.o)
 
 FLAGS = -Wall -Werror -Wextra -O2
 
-all: $(LIBFT) $(PRINTF) $(NAME) 
+all: $(LIBFT) $(PRINTF) $(NAME) pipex.h
 
-bonus: $(LIBFT) $(PRINTF) $(NAME_BONUS)
+bonus: $(LIBFT) $(PRINTF) $(NAME_BONUS) pipex.h
 
 $(LIBFT):
 	make -C libft
@@ -21,10 +21,10 @@ $(LIBFT):
 $(PRINTF):
 	make -C printf
 
-$(NAME): $(OBJ) Makefile $(LIBFT) $(PRINTF)
+$(NAME): $(OBJ) Makefile pipex.h $(LIBFT) $(PRINTF)
 	gcc $(OBJ) -L./libft -lft -L./printf -lftprintf -o $(NAME)
 
-$(NAME_BONUS): $(OBJ_BONUS) Makefile $(LIBFT)
+$(NAME_BONUS): $(OBJ_BONUS) Makefile pipex.h $(LIBFT)
 	gcc $(OBJ_BONUS) -L./libft -lft -L./printf -lftprintf -o $(NAME_BONUS)
 
 %.o:	%.c
