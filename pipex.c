@@ -33,39 +33,52 @@ static int check_init_args(t_pipex *p, int argc, char **argv)
 	return (0);
 }
 
-int	main(int argc, char *argv[])
+int	main(int argc, char *argv[], char **env)
 {
 	t_pipex	*p;
+	int		i;
 	
 	if (!(p = malloc(sizeof(p))))
 		return (ft_putstr_fd("Malloc error.\n", 1));
 	if (check_init_args(p, argc, argv))
 		return (0);
-	p->pid = fork();
-	if (p->pid == 0)
+	i = 0;
+	if (!pipe(p->fd))
 	{
-		execve(ft_strjoin("/usr/bin/", p->cmd[0][0]), p->cmd[0], NULL);
-		ft_putstr_fd("didnt happened\n", 1);
+		ft_printf("1\n");
+		p->pid = fork();
+		if (p->pid == 0)
+		{
+			ft_printf("2\n");
+			dup2(p->file1, STDIN_FILENO);
+			ft_printf("3\n");
+			dup2(p->fd[1], STDOUT_FILENO);
+			ft_printf("4\n");
+			execve(ft_strjoin("/usr/bin/", p->cmd[0][0]), p->cmd[0], env);
+			ft_putstr_fd("didnt happened\n", 1);
+		}
+		else if (p->pid > 0)
+		{
+			ft_printf("5\n");
+			wait(NULL);
+			ft_printf("6\n");
+			dup2(p->fd[0], STDIN_FILENO);
+			ft_printf("7\n");
+			dup2(p->file2, STDOUT_FILENO);
+			ft_printf("8\n");
+			execve(ft_strjoin("/usr/bin/", p->cmd[1][0]), p->cmd[1], env);
+			ft_putstr_fd("\nDone\n", 1);
+		}
+		else
+			return (ft_printf("fork: %s\n", strerror(errno)));
 	}
 	else
-	{
-		wait(NULL);
-		ft_putstr_fd("\nDone\n", 1);
-	}
-	return (0);
+		return(ft_printf("pipe: %s\n", strerror(errno)));
+	return (i);
 
 
-	/*	char	**newargv;
-	int		id;
-	int		fd[2];
-	char	*x;
-	char	*y;
-
-	newargv = NULL;
-	if (check_args(argc, argv, newargv) != 0)
-		return (1);
-	//fd[0] = open(argv[1], O_RDONLY);
-	if (!pipe(fd))
+	/*
+		if (!pipe(fd))
 	{	
 		id = fork();
 		if (id == -1)
