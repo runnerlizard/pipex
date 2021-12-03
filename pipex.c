@@ -12,6 +12,31 @@
 
 #include "pipex.h"
 
+static int fork_2(t_pipex *p, char **env)
+{
+	p->pid = fork();
+	if (p->pid == 0)
+	{
+		close(p->fd[0]); //check
+		dup2(p->file1, STDIN_FILENO); //check
+		dup2(p->fd[1], STDOUT_FILENO); //check
+		execve(ft_strjoin("/usr/bin/", p->cmd[0][0]), p->cmd[0], env);
+		return (ft_printf("fork: %s\n", strerror(errno)));
+	}
+	else if (p->pid > 0)
+	{
+		wait(NULL); //check
+		close(p->fd[1]); //check
+		dup2(p->fd[0], STDIN_FILENO); //check
+		dup2(p->file2, STDOUT_FILENO); //check
+		execve(ft_strjoin("/usr/bin/", p->cmd[1][0]), p->cmd[1], env);
+		ft_printf("fork: %s\n", strerror(errno));
+	}
+	else
+		return (ft_printf("fork: %s\n", strerror(errno)));
+	return (1);
+}
+
 static int check_init_args(t_pipex *p, int argc, char **argv)
 {
 	int		i;
@@ -33,38 +58,17 @@ static int check_init_args(t_pipex *p, int argc, char **argv)
 	return (0);
 }
 
-int	main(int argc, char *argv[], char **env)
+int	main(int argc, char *argv[], char **env) //add closes and frees in error cases
 {
 	t_pipex	*p;
-	int		i;
 	
 	if (!(p = malloc(sizeof(p))))
 		return (ft_putstr_fd("Malloc error.\n", 1));
 	if (check_init_args(p, argc, argv))
 		return (0);
-	i = 0;
 	if (!pipe(p->fd))
-	{
-		p->pid = fork();
-		if (p->pid == 0)
-		{
-			close(p->fd[0]);
-			dup2(p->file1, STDIN_FILENO);
-			dup2(p->fd[1], STDOUT_FILENO);
-			execve(ft_strjoin("/usr/bin/", p->cmd[0][0]), p->cmd[0], env);
-		}
-		else if (p->pid > 0)
-		{
-			wait(NULL);
-			close(p->fd[1]);
-			dup2(p->fd[0], STDIN_FILENO);
-			dup2(p->file2, STDOUT_FILENO);
-			execve(ft_strjoin("/usr/bin/", p->cmd[1][0]), p->cmd[1], env);
-		}
-		else
-			return (ft_printf("fork: %s\n", strerror(errno)));
-	}
+		return (fork_2(p, env));
 	else
 		return(ft_printf("pipe: %s\n", strerror(errno)));
-	return (i);
+	return (0);
 }
