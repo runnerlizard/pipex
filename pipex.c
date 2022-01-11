@@ -17,20 +17,23 @@ static int fork_2(t_pipex *p, char **env)
 	p->pid = fork();
 	if (p->pid == 0)
 	{
-		close(p->fd[0]); //check
-		dup2(p->file1, STDIN_FILENO); //check
-		dup2(p->fd[1], STDOUT_FILENO); //check
+		if (close(p->fd[0]))
+			ft_printf("close: %s\n", strerror(errno));
+		if ((dup2(p->file1, STDIN_FILENO) < 0) || (dup2(p->fd[1], STDOUT_FILENO) < 0))
+			ft_printf("dup2: %s\n", strerror(errno));
 		execve(ft_strjoin("/usr/bin/", p->cmd[0][0]), p->cmd[0], env);
-		return (ft_printf("fork: %s\n", strerror(errno)));
+		return (ft_printf("execve: %s\n", strerror(errno)));
 	}
 	else if (p->pid > 0)
 	{
-		wait(NULL); //check
-		close(p->fd[1]); //check
-		dup2(p->fd[0], STDIN_FILENO); //check
-		dup2(p->file2, STDOUT_FILENO); //check
+		if (wait(NULL) < 0)
+			ft_printf("wait: %s\n", strerror(errno));
+		if (close(p->fd[1]))
+			ft_printf("close: %s\n", strerror(errno));
+		if ((dup2(p->fd[0], STDIN_FILENO) < 0) || (dup2(p->file2, STDOUT_FILENO) < 0))
+			ft_printf("dup2: %s\n", strerror(errno));
 		execve(ft_strjoin("/usr/bin/", p->cmd[1][0]), p->cmd[1], env);
-		ft_printf("fork: %s\n", strerror(errno));
+		ft_printf("execve: %s\n", strerror(errno));
 	}
 	else
 		return (ft_printf("fork: %s\n", strerror(errno)));
