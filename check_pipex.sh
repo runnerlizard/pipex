@@ -39,28 +39,28 @@ cd temporary
 touch res1 res2
 cd ..
 
-touch infile outfile1
+touch infile outfile
 chmod 777 infile
-chmod 777 outfile1
+chmod 777 outfile
 echo blablabla >infile
-echo blablabla >outfile1
+echo blablabla >outfile
 
-./pipex infile "ls -l" "wc -l" outfile1
-stat --format="%a" outfile1 >./temporary/res1
-cat outfile1 >>./temporary/res1
+./pipex infile "ls -l" "wc -l" outfile
+stat --format="%a" outfile >./temporary/res1
+cat outfile >>./temporary/res1
 
 rm -rf infile || true
 rm -rf outfile || true
 
-touch infile outfile2
+touch infile outfile
 chmod 777 infile
-chmod 777 outfile2
+chmod 777 outfile
 echo blablabla >infile
-echo blablabla >outfile2
+echo blablabla >outfile
 
-< infile ls -l | wc -l > outfile2
-stat --format="%a" outfile2 >./temporary/res2
-cat outfile2 >>./temporary/res2
+< infile ls -l | wc -l > outfile
+stat --format="%a" outfile >./temporary/res2
+cat outfile >>./temporary/res2
 
 if cmp -s "./temporary/res1" "./temporary/res2"; then
     printf 'Test 2 - \e[1;32mOK\n\e[0m'
@@ -303,7 +303,4 @@ fi
 
 rm -rf infile || true
 rm -rf outfile || truerm -rf temporary || true
-
-
-
-#rm -rf temporary || true
+rm -rf temporary || true
