@@ -14,29 +14,40 @@
 
 static int fork_2(t_pipex *p, char **env, char **argv)
 {
-	p->pid = fork();
-	if (p->pid == 0)
+	p->pid1 = fork();
+	if (p->pid1 == 0)
 	{
-		p->file1 = open(argv[1], O_RDONLY);
-		if (p->file1 < 0)
-			return(ft_printf("%s: %s\n", argv[1], strerror(errno)));
-		if (close(p->fd[0]))
-			ft_printf("close: %s\n", strerror(errno));
-		if ((dup2(p->file1, STDIN_FILENO) < 0) || (dup2(p->fd[1], STDOUT_FILENO) < 0))
-			ft_printf("dup2: %s\n", strerror(errno));
-		execve(ft_strjoin("/usr/bin/", p->cmd[0][0]), p->cmd[0], env);
-		return (-1);
+		p->pid2 = fork();
+		if (p->pid2 == 0)
+		{
+			p->file1 = open(argv[1], O_RDONLY);
+			if (p->file1 < 0)
+				return(ft_printf("%s: %s\n", argv[1], strerror(errno)));
+			if (close(p->fd[0]))
+				ft_printf("close: %s\n", strerror(errno));
+			if ((dup2(p->file1, STDIN_FILENO) < 0) || (dup2(p->fd[1], STDOUT_FILENO) < 0))
+				ft_printf("dup2: %s\n", strerror(errno));
+			execve(ft_strjoin("/usr/bin/", p->cmd[0][0]), p->cmd[0], env);
+		}
+		else if (p->pid2 > 0)
+		{
+			if (wait(NULL) < 0)
+				ft_printf("wait: %s\n", strerror(errno));
+			if (close(p->fd[1]))
+				ft_printf("close: %s\n", strerror(errno));
+			if ((dup2(p->fd[0], STDIN_FILENO) < 0) || (dup2(p->file2, STDOUT_FILENO) < 0))
+				ft_printf("dup2: %s\n", strerror(errno));
+			execve(ft_strjoin("/usr/bin/", p->cmd[1][0]), p->cmd[1], env);
+		}
+		else
+			return (ft_printf("fork: %s\n", strerror(errno)));
+		return (0);
 	}
-	else if (p->pid > 0)
+	else if (p->pid1 > 0)
 	{
+		ft_printf("hjjhgh\n");
 		if (wait(NULL) < 0)
 			ft_printf("wait: %s\n", strerror(errno));
-		if (close(p->fd[1]))
-			ft_printf("close: %s\n", strerror(errno));
-		if ((dup2(p->fd[0], STDIN_FILENO) < 0) || (dup2(p->file2, STDOUT_FILENO) < 0))
-			ft_printf("dup2: %s\n", strerror(errno));
-		execve(ft_strjoin("/usr/bin/", p->cmd[1][0]), p->cmd[1], env);
-		return (-2);
 	}
 	else
 		return (ft_printf("fork: %s\n", strerror(errno)));
@@ -70,8 +81,13 @@ int	main(int argc, char *argv[], char **env) //add closes and frees in error cas
 	if (check_init_args(p, argc, argv))
 		return (0);
 	if (!pipe(p->fd))
-		return (fork_2(p, env, argv));
-		//ft_printf("execve: %s\n", strerror(errno));
+	{
+		
+		if (fork_2(p, env, argv) < 0)
+			ft_printf("execve123: %s\n", strerror(errno));
+		if ((p->pid1 == 0) && (p->pid2 == 0))
+			ft_printf("dfsdf\n");
+	}
 	else
 		return(ft_printf("pipe: %s\n", strerror(errno)));
 	return (0);
