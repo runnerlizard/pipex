@@ -12,11 +12,14 @@
 
 #include "pipex.h"
 
-static int fork_2(t_pipex *p, char **env)
+static int fork_2(t_pipex *p, char **env, char **argv)
 {
 	p->pid = fork();
 	if (p->pid == 0)
 	{
+		p->file1 = open(argv[1], O_RDONLY);
+		if (p->file1 < 0)
+			return(ft_printf("%s: %s\n", argv[1], strerror(errno)));
 		if (close(p->fd[0]))
 			ft_printf("close: %s\n", strerror(errno));
 		if ((dup2(p->file1, STDIN_FILENO) < 0) || (dup2(p->fd[1], STDOUT_FILENO) < 0))
@@ -46,9 +49,6 @@ static int check_init_args(t_pipex *p, int argc, char **argv)
 
 	if (argc != 5)
 		return (1);
-	p->file1 = open(argv[1], O_RDONLY);
-	if (p->file1 < 0)
-		return(ft_printf("%s: %s\n", argv[1], strerror(errno)));
 	p->file2 = open(argv[4], O_TRUNC | O_CREAT | O_WRONLY, 0664);
 	if (p->file2 < 0)
 		return(ft_printf("%s: %s\n", argv[4], strerror(errno)));
@@ -70,7 +70,7 @@ int	main(int argc, char *argv[], char **env) //add closes and frees in error cas
 	if (check_init_args(p, argc, argv))
 		return (0);
 	if (!pipe(p->fd))
-		return (fork_2(p, env));
+		return (fork_2(p, env, argv));
 	else
 		return(ft_printf("pipe: %s\n", strerror(errno)));
 	return (0);
