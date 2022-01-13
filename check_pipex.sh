@@ -162,7 +162,7 @@ echo blablabla >infile
 
 ./pipex infile "ls -l" "wc -l" outfile
 stat --format="%a" outfile >./temporary/res1
-cat outfile >>./temporary/res1
+cat outfile >>./temporary/res1 2>/dev/null
 
 rm -rf infile || true
 rm -rf outfile || true
@@ -174,7 +174,7 @@ echo blablabla >infile
 
 < infile ls -l | wc -l > outfile
 stat --format="%a" outfile >./temporary/res2
-cat outfile >>./temporary/res2
+cat outfile >>./temporary/res2 2>/dev/null
 
 if cmp -s "./temporary/res1" "./temporary/res2"; then
     printf 'Test 5 - \e[1;32mOK\n\e[0m'
@@ -384,4 +384,44 @@ fi
 
 rm -rf infile || true
 rm -rf outfile || truerm -rf temporary || true
+rm -rf temporary || true
+
+
+
+#11==================with wrong cmd1 and restricted output
+mkdir -p temporary
+cd temporary
+touch res1 res2
+cd ..
+
+rm -rf infile || true
+rm -rf outfile || true
+
+touch infile outfile
+chmod 777 infile
+chmod 000 outfile
+
+./pipex infile "lgfergerg" "wc -l" outfile
+stat --format="%a" outfile >./temporary/res1
+cat outfile >>./temporary/res1 2>/dev/null
+
+rm -rf infile || true
+rm -rf outfile || true
+
+touch infile outfile
+chmod 777 infile
+chmod 000 outfile
+
+< infile lgfergerg | wc -l > outfile
+stat --format="%a" outfile >./temporary/res2
+cat outfile >>./temporary/res2 2>/dev/null
+
+if cmp -s "./temporary/res1" "./temporary/res2"; then
+    printf 'Test 11 - \e[1;32mOK\n\e[0m'
+else
+    printf 'Test 11 without infile and outfile - \e[1;31mKO\n\e[0m'
+fi
+
+rm -rf infile || true
+rm -rf outfile || true
 rm -rf temporary || true
