@@ -463,3 +463,78 @@ fi
 rm -rf infile || true
 rm -rf outfile || true
 rm -rf temporary || true
+
+
+#13==================with restricted input
+mkdir -p temporary
+cd temporary
+touch res1 res2
+cd ..
+
+rm -rf infile || true
+rm -rf outfile || true
+
+touch infile outfile
+chmod 000 infile
+
+./pipex infile "ls -la" "wc" outfile
+stat --format="%a" outfile >./temporary/res1
+cat outfile >>./temporary/res1 2>/dev/null
+
+rm -rf infile || true
+rm -rf outfile || true
+
+touch infile outfile
+chmod 000 infile
+
+< infile ls -la| wc > outfile
+stat --format="%a" outfile >./temporary/res2
+cat outfile >>./temporary/res2 2>/dev/null
+
+if cmp -s "./temporary/res1" "./temporary/res2"; then
+    printf 'Test 13 - \e[1;32mOK\n\e[0m'
+else
+    printf 'Test 13 with restricted input - \e[1;31mKO\n\e[0m'
+fi
+
+rm -rf infile || true
+rm -rf outfile || true
+rm -rf temporary || true
+
+
+
+#14==================with restricted input and wrong cmd1
+mkdir -p temporary
+cd temporary
+touch res1 res2
+cd ..
+
+rm -rf infile || true
+rm -rf outfile || true
+
+touch infile outfile
+chmod 000 infile
+
+./pipex infile "hdht" "wc" outfile
+stat --format="%a" outfile >./temporary/res1
+cat outfile >>./temporary/res1 2>/dev/null
+
+rm -rf infile || true
+rm -rf outfile || true
+
+touch infile outfile
+chmod 000 infile
+
+< infile hdht | wc > outfile
+stat --format="%a" outfile >./temporary/res2
+cat outfile >>./temporary/res2 2>/dev/null
+
+if cmp -s "./temporary/res1" "./temporary/res2"; then
+    printf 'Test 14 - \e[1;32mOK\n\e[0m'
+else
+    printf 'Test 14 with restricted input and wrong cmd1 - \e[1;31mKO\n\e[0m'
+fi
+
+rm -rf infile || true
+rm -rf outfile || true
+rm -rf temporary || true

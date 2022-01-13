@@ -16,7 +16,6 @@ typedef struct s_pipex
 	char	***cmd;
 	int		fd[2];
 	pid_t	pid1;
-	pid_t	pid2;
 }				t_pipex;
 
 #endif
