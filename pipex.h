@@ -13,7 +13,6 @@ typedef struct s_pipex
 {
 	int		file1;
 	int		file2;
-	int		*waitstat;
 	char	***cmd;
 	int		fd[2];
 	pid_t	pid1;
