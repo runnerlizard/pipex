@@ -84,22 +84,20 @@ cd ..
 
 touch infile
 chmod 777 infile
-echo blablabla >infile
 
-./pipex infile "ls -l" "wc -l" outfile
-stat --format="%a" outfile >./temporary/res1
-cat outfile >>./temporary/res1
+./pipex infile "ls -l" "wc" outf
+stat --format="%a" outf >>./temporary/res1
+cat outf >>./temporary/res1
 
 rm -rf infile || true
-rm -rf outfile || true
+rm -rf outf || true
 
 touch infile
 chmod 777 infile
-echo blablabla >infile
 
-< infile ls -l | wc -l > outfile
-stat --format="%a" outfile >./temporary/res2
-cat outfile >>./temporary/res2
+< infile ls -l | wc > outf
+stat --format="%a" outf >>./temporary/res2
+cat outf >>./temporary/res2
 
 if cmp -s "./temporary/res1" "./temporary/res2"; then
     printf 'Test 3 - \e[1;32mOK\n\e[0m'
@@ -108,7 +106,7 @@ else
 fi
 
 rm -rf infile || true
-rm -rf outfile || true
+rm -rf outf || true
 rm -rf temporary || true
 
 
@@ -419,7 +417,47 @@ cat outfile >>./temporary/res2 2>/dev/null
 if cmp -s "./temporary/res1" "./temporary/res2"; then
     printf 'Test 11 - \e[1;32mOK\n\e[0m'
 else
-    printf 'Test 11 without infile and outfile - \e[1;31mKO\n\e[0m'
+    printf 'Test 11 with wrong cmd1 and restricted output - \e[1;31mKO\n\e[0m'
+fi
+
+rm -rf infile || true
+rm -rf outfile || true
+rm -rf temporary || true
+
+
+
+#12==================with wrong cmd1 and restricted output
+mkdir -p temporary
+cd temporary
+touch res1 res2
+cd ..
+
+rm -rf infile || true
+rm -rf outfile || true
+
+touch infile outfile
+chmod 777 infile
+chmod 000 outfile
+
+./pipex infile "lgfergerg" "tykjyj" outfile
+stat --format="%a" outfile >./temporary/res1
+cat outfile >>./temporary/res1 2>/dev/null
+
+rm -rf infile || true
+rm -rf outfile || true
+
+touch infile outfile
+chmod 777 infile
+chmod 000 outfile
+
+< infile lgfergerg | tykjyj > outfile
+stat --format="%a" outfile >./temporary/res2
+cat outfile >>./temporary/res2 2>/dev/null
+
+if cmp -s "./temporary/res1" "./temporary/res2"; then
+    printf 'Test 12 - \e[1;32mOK\n\e[0m'
+else
+    printf 'Test 12 with wrong cmd1 and cmd2 and restricted output - \e[1;31mKO\n\e[0m'
 fi
 
 rm -rf infile || true
