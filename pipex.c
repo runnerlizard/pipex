@@ -38,11 +38,16 @@ static void free_eto(char s, t_pipex *p)
 		free(p->cmd);*/
 }
 
-static void	close_and_free(char *s, t_pipex *p, char *message)
+static void	close_and_free(char *s, t_pipex *p, char *message, int cmd)
 {
 	int	i;
 
-	if (message)
+	if ((message) && (cmd > 0))
+	{
+		ft_putstr_fd(message, 2);
+		ft_putstr_fd(": Command not found\n", 2);
+	}
+	if ((message) && (cmd == 0))
 		perror(message);
 	i = -1;
 	while (s[++i])
@@ -61,14 +66,14 @@ static void cmd1(t_pipex *p, char **env, char **argv)
 {
 	p->file1 = open(argv[1], O_RDONLY);
 	if (p->file1 < 0)
-		close_and_free("6341", p, argv[1]);
+		close_and_free("6341", p, argv[1], 0);
 	if (close(p->fd[0]))
 		perror("close");
 	if ((dup2(p->file1, STDIN_FILENO) < 0) || (dup2(p->fd[1], STDOUT_FILENO) < 0))
 		perror("dup2");
 	p->file2 = open(argv[4], O_TRUNC | O_CREAT | O_WRONLY, 0664);
 	execve(ft_strjoin("/usr/bin/", p->cmd[0][0]), p->cmd[0], env);
-	close_and_free("3415", p, argv[2]);
+	close_and_free("3415", p, argv[2], 1);
 }
 
 static void cmd2(t_pipex *p, char **env, char **argv)
@@ -77,13 +82,13 @@ static void cmd2(t_pipex *p, char **env, char **argv)
 		perror("wait");
 	p->file2 = open(argv[4], O_TRUNC | O_CREAT | O_WRONLY, 0664);
 	if (p->file2 < 0)
-		close_and_free("341", p, argv[4]);
+		close_and_free("341", p, argv[4], 0);
 	if (close(p->fd[1]))
 		perror("close");
 	if ((dup2(p->fd[0], STDIN_FILENO) < 0) || (dup2(p->file2, STDOUT_FILENO) < 0))
 		perror("dup2");
 	execve(ft_strjoin("/usr/bin/", p->cmd[1][0]), p->cmd[1], env);
-	close_and_free("6341", p, argv[3]);
+	close_and_free("6341", p, argv[3], 1);
 }
 	
 int	main(int argc, char *argv[], char **env)
@@ -96,17 +101,17 @@ int	main(int argc, char *argv[], char **env)
 	if (!(p = malloc(sizeof(p))))
 		return (ft_putstr_fd("Malloc error.\n", 1));
 	if (!(p->cmd = malloc(sizeof(**(p->cmd)) * (argc - 2))))
-		close_and_free("1", p, "malloc p->cmd");
+		close_and_free("1", p, "malloc p->cmd", 0);
 	i = -1;
 	while (++i < argc - 3)
 		if (!(p->cmd[i] = ft_split(argv[2 + i], ' ')))
-			close_and_free("41", p, "malloc p->cmd[i]");
+			close_and_free("41", p, "malloc p->cmd[i]", 0);
 	if (pipe(p->fd))
-		close_and_free("341", p, "pipe");
+		close_and_free("341", p, "pipe", 0);
 	p->pid1 = fork();
 	if (p->pid1 == 0)
 		cmd1(p, env, argv);
 	else if (p->pid1 > 0)
 		cmd2(p, env, argv);
-	close_and_free("341", p, "fork");
+	close_and_free("341", p, "fork", 0);
 }
