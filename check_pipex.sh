@@ -1,6 +1,6 @@
 #!/bin/bash
 
-
+make
 
 #1==================without infile and outfile
 mkdir -p temporary
@@ -299,6 +299,87 @@ if cmp -s "./temporary/res1" "./temporary/res2"; then
     printf 'Test 8 - \e[1;32mOK\n\e[0m'
 else
     printf 'Test 8 with wrong cmd2 - \e[1;31mKO\n\e[0m'
+fi
+
+rm -rf infile || true
+rm -rf outfile || truerm -rf temporary || true
+rm -rf temporary || true
+
+
+#9==================wrong cmd1
+mkdir -p temporary
+cd temporary
+touch res1 res2
+cd ..
+
+touch infile outfile
+chmod 777 infile
+chmod 777 outfile
+echo blablabla >infile
+echo blablabla >outfile
+
+./pipex infile "blablabla" "ls -l" outfile
+stat --format="%a" outfile >./temporary/res1
+cat outfile >>./temporary/res1
+
+rm -rf infile || true
+rm -rf outfile || true
+
+touch infile outfile
+chmod 777 infile
+chmod 777 outfile
+echo blablabla >infile
+echo blablabla >outfile
+
+< infile blablabla | ls -l > outfile
+stat --format="%a" outfile >./temporary/res2
+cat outfile >>./temporary/res2
+
+if cmp -s "./temporary/res1" "./temporary/res2"; then
+    printf 'Test 9 - \e[1;32mOK\n\e[0m'
+else
+    printf 'Test 9 with wrong cmd1 - \e[1;31mKO\n\e[0m'
+fi
+
+rm -rf infile || true
+rm -rf outfile || truerm -rf temporary || true
+rm -rf temporary || true
+
+
+
+#10==================wrong cmd1 and cmd2
+mkdir -p temporary
+cd temporary
+touch res1 res2
+cd ..
+
+touch infile outfile
+chmod 777 infile
+chmod 777 outfile
+echo blablabla >infile
+echo blablabla >outfile
+
+./pipex infile "blablabla" "kljjsdlfh" outfile
+stat --format="%a" outfile >./temporary/res1
+cat outfile >>./temporary/res1
+
+rm -rf infile || true
+rm -rf outfile || true
+
+touch infile outfile
+chmod 777 infile
+chmod 777 outfile
+echo blablabla >infile
+echo blablabla >outfile
+
+< infile blablabla | kljjsdlfh > outfile
+stat --format="%a" outfile >./temporary/res2
+cat outfile >>./temporary/res2
+
+if cmp -s "./temporary/res1" "./temporary/res2"; then
+    printf 'Test 10 - \e[1;32mOK\n\e[0m'
+else
+    printf 'Test 10 with wrong cmd1 and cmd2 - \e[1;31mKO\n\e[0m'
 fi
 
 rm -rf infile || true
