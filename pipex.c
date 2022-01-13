@@ -12,66 +12,109 @@
 
 #include "pipex.h"
 
-static int fork_2(t_pipex *p, char **env, char **argv)
+static void	close_and_free(char *s, t_pipex *p, char *message)
+{
+	int	i;
+	int	j;
+	int	k;
+
+	if (message)
+		perror(message);
+	i = -1;
+	while (s[++i])
+	{
+		if (s[i] == '1')
+			free(p);
+		else if (s[i] == '2')
+			close(p->file2);
+		else if (s[i] == '3')
+		{
+			j = 0;
+			while (p->cmd[j])
+				j++;
+			while (j >= 0)
+			{
+				k = 0;
+				perror(p->cmd[j][0]);  //seagfault here
+				while (p->cmd[j][k])
+					k++;
+				while (k >= 0)
+					free(p->cmd[j][--k]);
+				free(p->cmd[j--]);
+			}
+		}
+		else if (s[i] == '4')
+			free(p->cmd);
+		else if (s[i] == '5')
+			close(p->file1);
+		else if (s[i] == '6')
+			close(p->file2);
+	}
+	exit(1);
+}
+
+static void fork_2(t_pipex *p, char **env, char **argv)
 {
 	p->pid1 = fork();
 	if (p->pid1 == 0)
 	{
+		if (close(p->file2))
+			perror("close");
 		p->file1 = open(argv[1], O_RDONLY);
 		if (p->file1 < 0)
-			return(ft_printf("%s: %s\n", argv[1], strerror(errno)));
+			close_and_free("2341", p, argv[1]);
 		if (close(p->fd[0]))
 			perror("close");
 		if ((dup2(p->file1, STDIN_FILENO) < 0) || (dup2(p->fd[1], STDOUT_FILENO) < 0))
 			perror("dup2");
 		execve(ft_strjoin("/usr/bin/", p->cmd[0][0]), p->cmd[0], env);
-		perror(argv[2]);
-		return (-1);
+		close_and_free("23415", p, argv[2]);
 	}
 	else if (p->pid1 > 0)
 	{
 		if (wait(NULL) < 0)
 			perror("wait");
+		if (close(p->file1))
+			perror("close");
 		if (close(p->fd[1]))
 			perror("close");
 		if ((dup2(p->fd[0], STDIN_FILENO) < 0) || (dup2(p->file2, STDOUT_FILENO) < 0))
 			perror("dup2");
 		execve(ft_strjoin("/usr/bin/", p->cmd[1][0]), p->cmd[1], env);
-		perror(argv[3]);
-		return (-2);
+		close_and_free("2341", p, argv[3]);
 	}
 	else
-		return (ft_printf("fork: %s\n", strerror(errno)));
-	return (1);
+		close_and_free("23416", p, "fork");
 }
 
-static int check_init_args(t_pipex *p, int argc, char **argv)
+static void check_init_args(t_pipex *p, int argc, char **argv)
 {
 	int		i;
 
 	if (argc != 5)
-		return (1);
+	{
+		ft_printf("Must be 4 arguments!");
+		close_and_free("1", p, NULL);
+	}
 	p->file2 = open(argv[4], O_TRUNC | O_CREAT | O_WRONLY, 0664);
 	if (p->file2 < 0)
-		return(ft_printf("%s: %s\n", argv[4], strerror(errno)));
+		close_and_free("1", p, argv[4]);
 	if (!(p->cmd = malloc(sizeof(**p->cmd) * (argc - 2))))
-		return (ft_putstr_fd("Malloc error 1.\n", 1));
+		close_and_free("12", p, "malloc p->cmd");
 	i = -1;
 	while (++i < argc - 3)
 		if (!(p->cmd[i] = ft_split(argv[2 + i], ' ')))
-			return (ft_putstr_fd("Malloc error 2.\n", 1));
-	return (0);
+			close_and_free("241", p, "malloc p->cmd[i]");
 }
 
-int	main(int argc, char *argv[], char **env) //add closes and frees in error cases
+int	main(int argc, char *argv[], char **env)
 {
 	t_pipex	*p;
 	
 	if (!(p = malloc(sizeof(p))))
 		return (ft_putstr_fd("Malloc error.\n", 1));
-	if (check_init_args(p, argc, argv))
-		return (0);
+	check_init_args(p, argc, argv);
 	if (!pipe(p->fd))
-		return (fork_2(p, env, argv));
-	return(ft_printf("pipe: %s\n", strerror(errno)));
+		fork_2(p, env, argv);
+	close_and_free("2341", p, "pipe");
 }
