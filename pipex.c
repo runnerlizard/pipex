@@ -71,17 +71,7 @@ int	main(int argc, char *argv[], char **env) //add closes and frees in error cas
 	if (check_init_args(p, argc, argv))
 		return (0);
 	if (!pipe(p->fd))
-<<<<<<< HEAD
 		return (fork_2(p, env, argv));
-=======
-	{
-		
-		if (fork_2(p, env, argv) < 0)
-			ft_printf("execve123: %s\n", strerror(errno));
-		if ((p->pid1 == 0) && (p->pid2 == 0))
-			ft_printf("dfsdf\n");
-	}
->>>>>>> 973cb9f0ad65c641bb50df3c37d35e6da58fa7dd
 	else
 		return(ft_printf("pipe: %s\n", strerror(errno)));
 	return (0);
