@@ -34,8 +34,8 @@ static void free_eto(char s, t_pipex *p)
 			free(p->cmd[j--]);
 		}
 	}
-	/*else if (s == '4')
-		free(p->cmd);*/
+	else if (s == '4')
+		free(p->cmd);
 }
 
 static void	close_and_free(char *s, t_pipex *p, char *message, int cmd)
@@ -66,7 +66,7 @@ static void cmd1(t_pipex *p, char **env, char **argv)
 {
 	p->file1 = open(argv[1], O_RDONLY);
 	if (p->file1 < 0)
-		close_and_free("6341", p, argv[1], 0);
+		close_and_free("341", p, argv[1], 0);
 	if (close(p->fd[0]))
 		perror("close");
 	if ((dup2(p->file1, STDIN_FILENO) < 0) || (dup2(p->fd[1], STDOUT_FILENO) < 0))
@@ -98,9 +98,9 @@ int	main(int argc, char *argv[], char **env)
 	
 	if (argc != 5)
 		return (ft_printf("Must be 4 arguments!"));
-	if (!(p = malloc(sizeof(p))))
+	if (!(p = malloc(sizeof(*p))))
 		return (ft_putstr_fd("Malloc error.\n", 1));
-	if (!(p->cmd = malloc(sizeof(**(p->cmd)) * 2)))
+	if (!(p->cmd = ft_calloc(sizeof(*(p->cmd)), 3)))
 		close_and_free("1", p, "malloc p->cmd", 0);
 	i = -1;
 	while (++i < argc - 3)

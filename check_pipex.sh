@@ -538,3 +538,19 @@ fi
 rm -rf infile || true
 rm -rf outfile || true
 rm -rf temporary || true
+
+
+
+
+#################   VALGRIND  ############################
+
+#1 
+
+rm -rf infile || true
+rm -rf outfile || true
+
+valgrind --leak-check=full --track-origins=yes --log-file="logValgrind" ./pipex infile "ls -l" "wc -l" outfile || true
+if (<logValgrind wc -l) > 15
+echo KO
+
+rm -rf logValgrind || true
