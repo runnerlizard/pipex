@@ -45,7 +45,7 @@ static void	close_and_free(char *s, t_pipex *p, char *message, int cmd)
 	if ((message) && (cmd > 0))
 	{
 		ft_putstr_fd(message, 2);
-		ft_putstr_fd(": Command not found\n", 2);
+		ft_putstr_fd(": command not found\n", 2);
 	}
 	if ((message) && (cmd == 0))
 		perror(message);
@@ -100,7 +100,7 @@ int	main(int argc, char *argv[], char **env)
 		return (ft_printf("Must be 4 arguments!"));
 	if (!(p = malloc(sizeof(p))))
 		return (ft_putstr_fd("Malloc error.\n", 1));
-	if (!(p->cmd = malloc(sizeof(**(p->cmd)) * (argc - 2))))
+	if (!(p->cmd = malloc(sizeof(**(p->cmd)) * 2)))
 		close_and_free("1", p, "malloc p->cmd", 0);
 	i = -1;
 	while (++i < argc - 3)

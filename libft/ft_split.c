@@ -21,7 +21,7 @@ size_t	ft_split_count(char const *str, char ch)
 		if (k != 0)
 			res++;
 	}
-	return (res);
+	return (res + 1);
 }
 
 void	ft_write_word(char *res, char const *str, size_t start, size_t end)
@@ -76,7 +76,7 @@ char	**ft_split(char const *str, char ch)
 
 	if (!(str))
 		return (NULL);
-	res = (char **)malloc((sizeof(char *)) * (ft_split_count(str, ch) + 1));
+	res = (char **)malloc((sizeof(char *)) * (ft_split_count(str, ch)));
 	if (res == NULL)
 		return (NULL);
 	j = 0;
