@@ -623,14 +623,93 @@ rm -rf temporary || true
 
 
 
-#################   VALGRIND  ############################
 
-#1 
+#16==================command from another dir
+mkdir -p temporary
+cd temporary
+touch res1 res2
+cd ..
 
 touch infile outfile
+chmod 777 infile
+chmod 777 outfile
+echo blablabla >infile
+echo blablabla >outfile
 
-valgrind --leak-check=full --log-file="logValgrind" ./pipex infile "ls -l" "wc -l" outfile 
-#if (<logValgrind wc -l) > 15
-#echo KO
+./pipex infile "brew --version" "wc" outfile
+stat --format="%a" outfile >./temporary/res1 2>/dev/null
+cat outfile >>./temporary/res1 2>/dev/null
 
-rm -rf logValgrind || true
+rm -rf infile || true
+rm -rf outfile || true
+
+touch infile outfile
+chmod 777 infile
+chmod 777 outfile
+echo blablabla >infile
+echo blablabla >outfile
+
+< infile brew --version | wc > outfile
+stat --format="%a" outfile >./temporary/res2 2>/dev/null
+cat outfile >>./temporary/res2 2>/dev/null
+
+if cmp -s "./temporary/res1" "./temporary/res2"; then
+    printf 'Test 17 - \e[1;32mOK\n\e[0m'
+else
+    printf 'Test 17 command from another dir - \e[1;31mKO\n\e[0m'
+fi
+
+rm -rf infile || true
+rm -rf outfile || true
+rm -rf temporary || true
+
+
+#################   VALGRIND  ############################
+
+printf "===============VALGRIND==================="
+
+printf "\n\n\nwithout infile and outfile\n"
+rm -rf infile || true
+rm -rf outfile || true
+
+valgrind --show-leak-kinds=all ./pipex infile "ls -l" "wc -l" outfile 2>logValgrind 
+grep -e "in use at exit" -e "total heap" -e "All heap" -e "ERROR" logValgrind
+
+
+printf "\n\n\n\nwith infile and outfile\n"
+touch infile outfile
+
+valgrind --show-leak-kinds=all ./pipex infile "ls -l" "wc -l" outfile 2>logValgrind
+grep -e "in use at exit" -e "total heap" -e "All heap" -e "ERROR" logValgrind
+
+
+
+printf "\n\n\n\nwith restricted outfile\n"
+touch infile outfile
+chmod 000 outfile
+
+valgrind --show-leak-kinds=all ./pipex infile "ls -l" "wc -l" outfile 2>logValgrind
+grep -e "in use at exit" -e "total heap" -e "All heap" -e "ERROR" logValgrind
+
+
+printf "\n\n\n\nwith wrong cmd1\n"
+touch infile outfile
+chmod 000 outfile
+
+valgrind --show-leak-kinds=all ./pipex infile "ddsfgf" "wc -l" outfile 2>logValgrind
+grep -e "in use at exit" -e "total heap" -e "All heap" -e "ERROR" logValgrind
+
+
+
+
+printf "\n\n\n\nwith wrong cmd2\n"
+touch infile outfile
+chmod 000 outfile
+
+valgrind --show-leak-kinds=all ./pipex infile "ls -l" "hjkfhk" outfile 2>logValgrind
+grep -e "in use at exit" -e "total heap" -e "All heap" -e "ERROR" logValgrind
+
+
+rm -rf outfile
+rm -rf infile
+rm -rf logValgrind
