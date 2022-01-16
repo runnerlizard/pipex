@@ -2,7 +2,7 @@ NAME = pipex
 LIBFT = libft/libft.a
 PRINTF = printf/libftprintf.a
 
-SRC = pipex.c
+SRC = pipex.c close_free.c cmd.c get_path.c
 
 OBJ = $(SRC:.c=.o)
 
