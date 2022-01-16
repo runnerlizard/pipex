@@ -672,15 +672,13 @@ printf "\n\n\nwithout infile and outfile\n"
 rm -rf infile || true
 rm -rf outfile || true
 
-valgrind --show-leak-kinds=all ./pipex infile "ls -l" "wc -l" outfile 2>logValgrind 
-grep -e "in use at exit" -e "total heap" -e "All heap" -e "ERROR" logValgrind
+valgrind --leak-check=full ./pipex infile "ls -l" "wc -l" outfile 
 
 
 printf "\n\n\n\nwith infile and outfile\n"
 touch infile outfile
 
-valgrind --show-leak-kinds=all ./pipex infile "ls -l" "wc -l" outfile 2>logValgrind
-grep -e "in use at exit" -e "total heap" -e "All heap" -e "ERROR" logValgrind
+valgrind --leak-check=full ./pipex infile "ls -l" "wc -l" outfile 
 
 
 
@@ -688,16 +686,14 @@ printf "\n\n\n\nwith restricted outfile\n"
 touch infile outfile
 chmod 000 outfile
 
-valgrind --show-leak-kinds=all ./pipex infile "ls -l" "wc -l" outfile 2>logValgrind
-grep -e "in use at exit" -e "total heap" -e "All heap" -e "ERROR" logValgrind
+valgrind --leak-check=full ./pipex infile "ls -l" "wc -l" outfile 
 
 
 printf "\n\n\n\nwith wrong cmd2\n"
 touch infile outfile
 
 
-valgrind --show-leak-kinds=all ./pipex infile "ls -l" "hjkfhk" outfile 2>logValgrind
-grep -e "in use at exit" -e "total heap" -e "All heap" -e "ERROR" logValgrind
+valgrind --leak-check=full ./pipex infile "ls -l" "hjkfhk" outfile 
 
 
 rm -rf outfile
