@@ -2,10 +2,10 @@
 
 int get_next_line(char **line, int fd)
 {
-	int rd;
-	int i;
-	char ch;
-	char *buffer;
+	int		rd;
+	int		i;
+	char	ch;
+	char	*buffer;
 
 	rd = 0;
 	i = 0;
@@ -40,7 +40,7 @@ static void realloc_cmd(t_pipex *p, char **new, int n)
 	free(tmp);
 }
 
-static char	**parent_replace(char *path, char **cmd)
+static char	**get_new(char *path, char **cmd)
 {
 	int		i;
 	char	**new;
@@ -50,7 +50,10 @@ static char	**parent_replace(char *path, char **cmd)
 		;
 	i++;
 	new = malloc(sizeof(char *) * i);
-	new[0] = path;
+	if (path == NULL)
+		new[0] = path;
+	else
+		return (NULL);
 	i = 0;
 	while (cmd[++i])
 	{
@@ -72,13 +75,13 @@ void	launch_which(char *cmd, char **env, t_pipex *p)
         close_and_free("1234560", p, "clucotmpfile", 0);
     execve("/usr/bin/which", args, env);
 	free(args[1]);
-	close_and_free("12340", p, "whichchild", 0);
+	close_and_free("30", p, "whichchild", 0);
 }
 
 void	replace_cmd(t_pipex *p, int n, char *str)
 {
 	if (n == 1)
-		realloc_cmd(p, parent_replace(str, p->cmd1), 1);
+		realloc_cmd(p, get_new(str, p->cmd1), 1);
 	else if (n == 2)
-		realloc_cmd(p, parent_replace(str, p->cmd2), 2);
+		realloc_cmd(p, get_new(str, p->cmd2), 2);
 }

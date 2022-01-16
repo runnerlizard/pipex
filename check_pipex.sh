@@ -5,31 +5,32 @@ printf "\n\n\n\n\n"
 make
 
 #1==================without infile and outfile
-mkdir -p temporary1
-cd temporary1
+mkdir -p temporary
+cd temporary
 touch res1 res2
 cd ..
 
 rm -rf infile || true
 rm -rf outfile || true
 
-./pipex infile "ls -l" "wc -l" outfile
-stat --format="%a" outfile >./temporary1/res1 2>/dev/null
-cat outfile >>./temporary1/res1 2>/dev/null
+./pipex infile "ls -l" "wc -l" outfile 
+stat --format="%a" outfile >./temporary/res1 2>/dev/null
+cat outfile >>./temporary/res1 2>/dev/null
 
 rm -rf infile || true
 rm -rf outfile || true
 
 < infile ls -l | wc -l > outfile
-stat --format="%a" outfile >./temporary1/res2 2>/dev/null
-cat outfile >>./temporary1/res2 2>/dev/null
+stat --format="%a" outfile >./temporary/res2 2>/dev/null
+cat outfile >>./temporary/res2 2>/dev/null
 
-if cmp -s "./temporary1/res1" "./temporary1/res2"; then
+if cmp -s "./temporary/res1" "./temporary/res2"; then
     printf 'Test 1 - \e[1;32mOK\n\e[0m'
 else
     printf 'Test 1 without infile and outfile - \e[1;31mKO\n\e[0m'
 fi
 
+exit 1
 rm -rf infile || true
 rm -rf outfile || true
 rm -rf temporary || true
@@ -47,7 +48,7 @@ chmod 777 outfile
 echo blablabla >infile
 echo blablabla >outfile
 
-./pipex infile "ls -l" "wc -l" outfile
+./pipex infile "ls -l" "wc -l" outfile 
 stat --format="%a" outfile >./temporary/res1 2>/dev/null
 cat outfile >>./temporary/res1 2>/dev/null
 
@@ -301,6 +302,7 @@ else
     printf 'Test 8 with wrong cmd2 - \e[1;31mKO\n\e[0m'
 fi
 
+exit 1
 rm -rf infile || true
 rm -rf outfile || truerm -rf temporary || true
 rm -rf temporary || true

@@ -33,9 +33,8 @@ static void cmd1(t_pipex *p, char **env, char **argv)
 {
 	char	*str;
 	
-	if (p->file1 > 0)
-		if (dup2(p->file1, STDIN_FILENO) < 0)
-			close_and_free("12340", p, argv[1], 0);
+	if (dup2(p->file1, STDIN_FILENO) < 0)
+		close_and_free("12340", p, argv[1], 0);
 	p->tmp_fd = open("clucotmpfile", O_TRUNC | O_CREAT | O_RDWR, 0664);
 	if (p->tmp_fd < 0)
 		close_and_free("1230", p, "clucotmpfile", 0);
@@ -53,10 +52,12 @@ static void cmd1(t_pipex *p, char **env, char **argv)
 			perror("close");
 		if (dup2(p->fd[1], STDOUT_FILENO) < 0)
 			close_and_free("1234560", p, "dup[2]", 0);
-		unlink("clucotmpfile");
+		close_and_free("246", p, NULL, 0);
 		execve(p->cmd1[0], p->cmd1, env);
+		close_and_free("1350", p, p->cmd1[0], 1);
 	}
-	close_and_free("1234560", p, "fork1", 0);
+	else
+		close_and_free("1234560", p, "fork1", 0);
 }
 
 static void cmd2(t_pipex *p, char **env, char **argv)
@@ -79,16 +80,19 @@ static void cmd2(t_pipex *p, char **env, char **argv)
 		p->tmp_fd = open("clucotmpfile", O_RDONLY);
 		if (wait(NULL) < 0)
 			perror("wait2");
-		get_next_line(&str, p->tmp_fd);
+		if (get_next_line(&str, p->tmp_fd) == 0)
+			close_and_free("1234560", p, p->cmd2[0], 1);
 		replace_cmd(p, 2, str);
 		if (close(p->fd[1]))
 			close_and_free("1234560", p, argv[1], 0);
 		if ((dup2(p->fd[0], STDIN_FILENO) < 0) || (dup2(p->file2, STDOUT_FILENO) < 0))
 			close_and_free("1234560", p, argv[1], 0);
-		unlink("clucotmpfile");
+		close_and_free("145", p, NULL, 0);
 		execve(p->cmd2[0], p->cmd2, env);
+		close_and_free("2360", p, p->cmd2[0], 1);
 	}
-	close_and_free("1234560", p, "fork2", 0);
+	else
+		close_and_free("1234560", p, "fork2", 0);
 }
 
 int	main(int argc, char *argv[], char **env)
@@ -102,8 +106,12 @@ int	main(int argc, char *argv[], char **env)
 		close_and_free("1230", p, "pipe", 0);
 	p->pid1 = fork();
 	if (p->pid1 == 0)
-		cmd1(p, env, argv);
+	{
+		if (p->file1 > 0)
+			cmd1(p, env, argv);
+	}
 	else if (p->pid1 > 0)
 		cmd2(p, env, argv);
-	close_and_free("1230", p, "fork1", 0);
+	else
+		close_and_free("1230", p, "fork1", 0);
 }
