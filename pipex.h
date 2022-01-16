@@ -13,13 +13,17 @@ typedef struct s_pipex
 {
 	int		file1;
 	int		file2;
-	char	***cmd;
+	int		tmp_fd;
+	char	**cmd1;
+	char	**cmd2;
 	int		fd[2];
 	pid_t	pid1;
+	pid_t	pid2;
 }				t_pipex;
 
-char    *get_path(char *str, t_pipex *p, char **env);
+void	replace_cmd(t_pipex *p, int n, char *str);
 void	close_and_free(char *s, t_pipex *p, char *message, int cmd);
-void    launch_cmd(t_pipex *p, char **argv, char **env);
+void	launch_which(char *cmd, char **env, t_pipex *p);
+int 	get_next_line(char **line, int fd);
 
 #endif

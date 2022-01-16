@@ -1,3 +1,5 @@
 .vscode/configurationCache.log
 .vscode/dryrun.log
 .vscode/targets.log
+.DS_Store
+.vscode/c_cpp_properties.json

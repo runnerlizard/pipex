@@ -3,28 +3,27 @@
 static void free_eto(char s, t_pipex *p)
 {
 	int	j;
-	int	k;
 
-	if (s == '1')
+	if (s == '3')
 		free(p);
-	else if (s == '3')
+	else if (s == '1')
 	{
 		j = 0;
-		while (p->cmd[j])
+		while (p->cmd1[j])
 			j++;
-		free (p->cmd[j--]);
 		while (j >= 0)
-		{
-			k = 0;
-			while (p->cmd[j][k + 1])
-				k++;
-			while (k >= 0)
-				free(p->cmd[j][k--]);
-			free(p->cmd[j--]);
-		}
+			free(p->cmd1[j--]);
+		free(p->cmd1);
 	}
-	else if (s == '4')
-		free(p->cmd);
+	else if (s == '2')
+	{
+		j = 0;
+		while (p->cmd2[j])
+			j++;
+		while (j >= 0)
+			free(p->cmd2[j--]);
+		free(p->cmd2);
+	}
 }
 
 void	close_and_free(char *s, t_pipex *p, char *message, int cmd)
@@ -41,14 +40,15 @@ void	close_and_free(char *s, t_pipex *p, char *message, int cmd)
 	i = -1;
 	while (s[++i])
 	{
-		if ((s[i] == '1') || (s[i] == '3') || (s[i] == '4'))
+		if ((s[i] == '1') || (s[i] == '2') || (s[i] == '3'))
 			free_eto(s[i], p);
-		else if (s[i] == '2')
-			unlink("clucotestfile");
+		else if (s[i] == '4')
+			unlink("clucotmpfile");
 		else if (s[i] == '5')
 			close(p->file1);
 		else if (s[i] == '6')
 			close(p->file2);
+		if (s[i] == '0')
+			exit(1);
 	}
-	exit(1);
 }

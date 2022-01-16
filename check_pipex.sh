@@ -1,10 +1,12 @@
 #!/bin/bash
 
+printf "\n\n\n\n\n"
+
 make
 
 #1==================without infile and outfile
-mkdir -p temporary
-cd temporary
+mkdir -p temporary1
+cd temporary1
 touch res1 res2
 cd ..
 
@@ -12,17 +14,17 @@ rm -rf infile || true
 rm -rf outfile || true
 
 ./pipex infile "ls -l" "wc -l" outfile
-stat --format="%a" outfile >./temporary/res1 2>/dev/null
-cat outfile >>./temporary/res1 2>/dev/null
+stat --format="%a" outfile >./temporary1/res1 2>/dev/null
+cat outfile >>./temporary1/res1 2>/dev/null
 
 rm -rf infile || true
 rm -rf outfile || true
 
 < infile ls -l | wc -l > outfile
-stat --format="%a" outfile >./temporary/res2 2>/dev/null
-cat outfile >>./temporary/res2 2>/dev/null
+stat --format="%a" outfile >./temporary1/res2 2>/dev/null
+cat outfile >>./temporary1/res2 2>/dev/null
 
-if cmp -s "./temporary/res1" "./temporary/res2"; then
+if cmp -s "./temporary1/res1" "./temporary1/res2"; then
     printf 'Test 1 - \e[1;32mOK\n\e[0m'
 else
     printf 'Test 1 without infile and outfile - \e[1;31mKO\n\e[0m'
@@ -672,13 +674,15 @@ printf "\n\n\nwithout infile and outfile\n"
 rm -rf infile || true
 rm -rf outfile || true
 
-valgrind --leak-check=full ./pipex infile "ls -l" "wc -l" outfile 
+valgrind --leak-check=full --show-leak-kinds=all ./pipex infile "ls -l" "wc -l" outfile 
+grep -e "in use at exit" -e "total heap" -e "All heap" -e "ERROR" 
 
 
 printf "\n\n\n\nwith infile and outfile\n"
 touch infile outfile
 
-valgrind --leak-check=full ./pipex infile "ls -l" "wc -l" outfile 
+valgrind --leak-check=full --show-leak-kinds=all ./pipex infile "ls -l" "wc -l" outfile 
+grep -e "in use at exit" -e "total heap" -e "All heap" -e "ERROR" 
 
 
 
@@ -686,16 +690,17 @@ printf "\n\n\n\nwith restricted outfile\n"
 touch infile outfile
 chmod 000 outfile
 
-valgrind --leak-check=full ./pipex infile "ls -l" "wc -l" outfile 
+valgrind --leak-check=full --show-leak-kinds=all ./pipex infile "ls -l" "wc -l" outfile 
+grep -e "in use at exit" -e "total heap" -e "All heap" -e "ERROR" 
 
 
 printf "\n\n\n\nwith wrong cmd2\n"
 touch infile outfile
 
 
-valgrind --leak-check=full ./pipex infile "ls -l" "hjkfhk" outfile 
+valgrind --leak-check=full --show-leak-kinds=all ./pipex infile "ls -l" "hjkfhk" outfile 
+grep -e "in use at exit" -e "total heap" -e "All heap" -e "ERROR" 
 
 
 rm -rf outfile
 rm -rf infile
-rm -rf logValgrind
