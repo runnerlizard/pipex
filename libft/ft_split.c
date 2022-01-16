@@ -76,7 +76,7 @@ char	**ft_split(char const *str, char ch)
 
 	if (!(str))
 		return (NULL);
-	res = (char **)malloc((sizeof(char *)) * (ft_split_count(str, ch)));
+	res = ft_calloc((sizeof(char *)), (ft_split_count(str, ch)));
 	if (res == NULL)
 		return (NULL);
 	j = 0;
@@ -86,7 +86,7 @@ char	**ft_split(char const *str, char ch)
 		start = set_start_i(str, i, ch, 1);
 		i = set_start_i(str, start, ch, 2);
 		if (start != i)
-			res[j] = (char *)malloc(sizeof(char) * (i - start + 1));
+			res[j] = ft_calloc(sizeof(char), (i - start + 1));
 		if ((res[j] == NULL) && (i != start))
 			return (split_free (res));
 		if (start != i)

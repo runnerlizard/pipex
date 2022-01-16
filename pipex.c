@@ -22,8 +22,9 @@ static void free_eto(char s, t_pipex *p)
 	else if (s == '3')
 	{
 		j = 0;
-		while (p->cmd[j + 1])
+		while (p->cmd[j])
 			j++;
+		free (p->cmd[j--]);
 		while (j >= 0)
 		{
 			k = 0;
@@ -116,14 +117,14 @@ static void cmd1(t_pipex *p, char **env, char **argv)
 {
 	p->file1 = open(argv[1], O_RDONLY);
 	if (p->file1 < 0)
-		close_and_free("341", p, argv[1], 0);
+		close_and_free("3412", p, argv[1], 0);
 	if (close(p->fd[0]))
 		perror("close");
 	if ((dup2(p->file1, STDIN_FILENO) < 0) || (dup2(p->fd[1], STDOUT_FILENO) < 0))
 		perror("dup2");
 	p->file2 = open(argv[4], O_TRUNC | O_CREAT | O_WRONLY, 0664);
 	execve(p->cmd[0][0], p->cmd[0], env);
-	close_and_free("3415", p, argv[2], 1);
+	close_and_free("34152", p, argv[2], 1);
 }
 
 static void cmd2(t_pipex *p, char **env, char **argv)
@@ -138,24 +139,32 @@ static void cmd2(t_pipex *p, char **env, char **argv)
 	if ((dup2(p->fd[0], STDIN_FILENO) < 0) || (dup2(p->file2, STDOUT_FILENO) < 0))
 		perror("dup2");
 	execve(p->cmd[1][0], p->cmd[1], env);
-	close_and_free("6341", p, argv[3], 1);
+	close_and_free("63412", p, argv[3], 1);
 }
-	
-int	main(int argc, char *argv[], char **env)
+
+static t_pipex *malloc_p(int argc, char **argv)
 {
 	t_pipex	*p;
 	int		i;
-	
-	if (argc != 5)
-		return (ft_printf("Must be 4 arguments!"));
+
 	if (!(p = malloc(sizeof(*p))))
-		return (ft_putstr_fd("Malloc error.\n", 1));
+		close_and_free("", p, "malloc p->cmd", 0);
 	if (!(p->cmd = ft_calloc(sizeof(*(p->cmd)), 3)))
 		close_and_free("1", p, "malloc p->cmd", 0);
 	i = -1;
 	while (++i < argc - 3)
 		if (!(p->cmd[i] = ft_split(argv[2 + i], ' ')))
 			close_and_free("41", p, "malloc p->cmd[i]", 0);
+	return (p);
+}
+	
+int	main(int argc, char *argv[], char **env)
+{
+	t_pipex	*p;
+	
+	if (argc != 5)
+		return (ft_printf("Must be 4 arguments!"));
+	p = malloc_p(argc, argv);
 	p->cmd[0][0] = get_path(p->cmd[0][0], p, env);
 	p->cmd[1][0] = get_path(p->cmd[1][0], p, env);
 	if (pipe(p->fd))

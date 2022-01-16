@@ -692,19 +692,9 @@ valgrind --show-leak-kinds=all ./pipex infile "ls -l" "wc -l" outfile 2>logValgr
 grep -e "in use at exit" -e "total heap" -e "All heap" -e "ERROR" logValgrind
 
 
-printf "\n\n\n\nwith wrong cmd1\n"
-touch infile outfile
-chmod 000 outfile
-
-valgrind --show-leak-kinds=all ./pipex infile "ddsfgf" "wc -l" outfile 2>logValgrind
-grep -e "in use at exit" -e "total heap" -e "All heap" -e "ERROR" logValgrind
-
-
-
-
 printf "\n\n\n\nwith wrong cmd2\n"
 touch infile outfile
-chmod 000 outfile
+
 
 valgrind --show-leak-kinds=all ./pipex infile "ls -l" "hjkfhk" outfile 2>logValgrind
 grep -e "in use at exit" -e "total heap" -e "All heap" -e "ERROR" logValgrind
