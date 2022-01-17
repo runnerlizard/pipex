@@ -19,6 +19,20 @@ int get_next_line(char **line, int fd)
 	return (rd);
 }
 
+void	launch_which(char *cmd, char **env, t_pipex *p)
+{
+    char    *args[3];
+
+    args[0] = "which";
+	args[1] = cmd;
+    args[2] = NULL;
+    if (dup2(p->tmp_fd, 1) < 0)
+        close_and_free("1234560", p, "clucotmpfile", 0);
+    execve("/usr/bin/which", args, env);
+	free(args[1]);
+	close_and_free("30", p, "whichchild", 0);
+}
+
 static void realloc_cmd(t_pipex *p, char **new, int n)
 {
 	int		j;
@@ -47,7 +61,6 @@ static char	**get_new(char *path, char **cmd)
 	int		i;
 	char	**new;
 
-	//ft_printf("path %s, cmd2 %s\n", path, cmd[0]);
 	if (path != NULL)
 	{
 		i = 1;
@@ -58,30 +71,12 @@ static char	**get_new(char *path, char **cmd)
 		new[0] = path;
 		i = 0;
 		while (cmd[++i])
-		{
-			//ft_printf("%d  %s\n", ft_strlen(cmd[i]), cmd[i]);
 			new[i] = ft_strjoin("", cmd[i]);
-			//ft_printf("new[i] %s i  %d\n", new[i], i);
-		}
 		new[i] = NULL;
 	}
 	else
 		return (NULL);
 	return (new);
-}
-
-void	launch_which(char *cmd, char **env, t_pipex *p)
-{
-    char    *args[3];
-
-    args[0] = "which";
-	args[1] = cmd;
-    args[2] = NULL;
-    if (dup2(p->tmp_fd, 1) < 0)
-        close_and_free("1234560", p, "clucotmpfile", 0);
-    execve("/usr/bin/which", args, env);
-	free(args[1]);
-	close_and_free("30", p, "whichchild", 0);
 }
 
 void	replace_cmd(t_pipex *p, int n, char *str)

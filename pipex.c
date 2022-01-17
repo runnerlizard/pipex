@@ -12,6 +12,60 @@
 
 #include "pipex.h"
 
+
+static void free_eto(char s, t_pipex *p)
+{
+	int	j;
+
+	if (s == '3')
+		free(p);
+	else if (s == '1')
+	{
+		j = 0;
+		while (p->cmd1[j])
+			j++;
+		while (j >= 0)
+			free(p->cmd1[j--]);
+		free(p->cmd1);
+	}
+	else if (s == '2')
+	{
+		j = 0;
+		while (p->cmd2[j])
+			j++;
+		while (j >= 0)
+			free(p->cmd2[j--]);
+		free(p->cmd2);
+	}
+}
+
+void	close_and_free(char *s, t_pipex *p, char *message, int cmd)
+{
+	int	i;
+
+	if ((message) && (cmd > 0))
+	{
+		ft_putstr_fd(message, 2);
+		ft_putstr_fd(": command not found\n", 2);
+	}
+	if ((message) && (cmd == 0))
+		perror(message);
+	i = -1;
+	while (s[++i])
+	{
+		if ((s[i] == '1') || (s[i] == '2') || (s[i] == '3'))
+			free_eto(s[i], p);
+		else if (s[i] == '4')
+			unlink("clucotmpfile");
+		else if ((s[i] == '5') && (p->file1 > 0))
+			close(p->file1);
+		else if ((s[i] == '6') && (p->file2 > 0))
+			close(p->file2);
+		if (s[i] == '0')
+			exit(1);
+	}
+}
+
 static t_pipex *malloc_p(char **argv)
 {
 	t_pipex	*p;
@@ -25,76 +79,6 @@ static t_pipex *malloc_p(char **argv)
 	p->file2 = open(argv[4], O_TRUNC | O_CREAT | O_WRONLY, 0664);
 	p->file1 = open(argv[1], O_RDONLY);
 	return (p);
-}
-
-static void cmd1(t_pipex *p, char **env, char **argv)
-{
-	char	*str;
-	
-	if (p->file1 < 0)
-		close_and_free("561230", p, argv[1], 0);
-	if (dup2(p->file1, STDIN_FILENO) < 0)
-		close_and_free("12340", p, argv[1], 0);
-	p->tmp_fd = open("clucotmpfile", O_TRUNC | O_CREAT | O_RDWR, 0664);
-	if (p->tmp_fd < 0)
-		close_and_free("1230", p, "clucotmpfile", 0);
-	p->pid2 = fork();
-	if (p->pid2 == 0)
-        launch_which(p->cmd1[0], env, p);
-	else if (p->pid2 > 0)
-	{
-		p->tmp_fd = open("clucotmpfile", O_RDONLY);
-		if (wait(NULL) < 0)
-			perror("wait1");
-		if (get_next_line(&str, p->tmp_fd) == 0)
-			close_and_free("4561230", p, p->cmd1[0], 1);
-		replace_cmd(p, 1, str);
-		if (close(p->fd[0]))
-			perror("close");
-		if (dup2(p->fd[1], STDOUT_FILENO) < 0)
-			close_and_free("1234560", p, "dup[2]", 0);
-		close_and_free("246", p, NULL, 0);
-		execve(p->cmd1[0], p->cmd1, env);
-		close_and_free("1350", p, p->cmd1[0], 1);
-	}
-	else
-		close_and_free("1234560", p, "fork1", 0);
-}
-
-static void cmd2(t_pipex *p, char **env, char **argv)
-{
-	char	*str;
-	
-	if (wait(NULL) < 0)
-		close_and_free("561230", p, argv[1], 0);
-	p->file2 = open(argv[4], O_TRUNC | O_CREAT | O_WRONLY, 0664);
-	if (p->file2 < 0)
-		close_and_free("561230", p, argv[4], 0);
-	p->tmp_fd = open("clucotmpfile", O_TRUNC | O_CREAT | O_RDWR, 0664);
-	if (p->tmp_fd < 0)
-		close_and_free("561230", p, "clucotmpfile", 0);
-	p->pid2 = fork();
-	if (p->pid2 == 0)
-        launch_which(p->cmd2[0], env, p);
-	else if (p->pid2 > 0)
-	{
-		p->tmp_fd = open("clucotmpfile", O_RDONLY);
-		if (wait(NULL) < 0)
-			perror("wait2");
-		if (get_next_line(&str, p->tmp_fd) == 0)
-			close_and_free("4561230", p, p->cmd2[0], 1);
-		replace_cmd(p, 2, str);
-		ft_printf("3cmd20 %s cmd21\n", p->cmd2[0], p->cmd2[1]);
-		if (close(p->fd[1]))
-			close_and_free("4561230", p, argv[1], 0);
-		if ((dup2(p->fd[0], STDIN_FILENO) < 0) || (dup2(p->file2, STDOUT_FILENO) < 0))
-			close_and_free("4561230", p, argv[1], 0);
-		close_and_free("45", p, NULL, 0);
-		execve(p->cmd2[0], p->cmd2, env);
-		close_and_free("6230", p, p->cmd2[0], 1);
-	}
-	else
-		close_and_free("1234560", p, "fork2", 0);
 }
 
 int	main(int argc, char *argv[], char **env)
