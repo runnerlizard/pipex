@@ -46,7 +46,8 @@ static void cmd1(t_pipex *p, char **env, char **argv)
 		p->tmp_fd = open("clucotmpfile", O_RDONLY);
 		if (wait(NULL) < 0)
 			perror("wait1");
-		get_next_line(&str, p->tmp_fd);
+		if (get_next_line(&str, p->tmp_fd) == 0)
+			close_and_free("4561230", p, p->cmd1[0], 1);
 		replace_cmd(p, 1, str);
 		if (close(p->fd[0]))
 			perror("close");
@@ -77,24 +78,19 @@ static void cmd2(t_pipex *p, char **env, char **argv)
         launch_which(p->cmd2[0], env, p);
 	else if (p->pid2 > 0)
 	{
-		//ft_printf("1cmd20 %s\n", p->cmd2[0]);
 		p->tmp_fd = open("clucotmpfile", O_RDONLY);
 		if (wait(NULL) < 0)
 			perror("wait2");
 		if (get_next_line(&str, p->tmp_fd) == 0)
 			close_and_free("4561230", p, p->cmd2[0], 1);
-		//ft_printf("str %s\n", str);
 		replace_cmd(p, 2, str);
-		//ft_printf("3cmd20 %s\n", p->cmd2[0]);
+		ft_printf("3cmd20 %s cmd21\n", p->cmd2[0], p->cmd2[1]);
 		if (close(p->fd[1]))
 			close_and_free("4561230", p, argv[1], 0);
 		if ((dup2(p->fd[0], STDIN_FILENO) < 0) || (dup2(p->file2, STDOUT_FILENO) < 0))
 			close_and_free("4561230", p, argv[1], 0);
 		close_and_free("45", p, NULL, 0);
-		//ft_putstr_fd("here2\n", 2);
-		//ft_putstr_fd(p->cmd2[0], 2);
 		execve(p->cmd2[0], p->cmd2, env);
-		//ft_putstr_fd("here3\n", 2);
 		close_and_free("6230", p, p->cmd2[0], 1);
 	}
 	else

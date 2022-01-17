@@ -676,14 +676,13 @@ rm -rf infile || true
 rm -rf outfile || true
 
 valgrind --leak-check=full --show-leak-kinds=all ./pipex infile "ls -l" "wc -l" outfile 
-grep -e "in use at exit" -e "total heap" -e "All heap" -e "ERROR" 
 
-exit 1
+
 printf "\n\n\n\nwith infile and outfile\n"
 touch infile outfile
 
 valgrind --leak-check=full --show-leak-kinds=all ./pipex infile "ls -l" "wc -l" outfile 
-grep -e "in use at exit" -e "total heap" -e "All heap" -e "ERROR" 
+
 
 
 
@@ -692,7 +691,14 @@ touch infile outfile
 chmod 000 outfile
 
 valgrind --leak-check=full --show-leak-kinds=all ./pipex infile "ls -l" "wc -l" outfile 
-grep -e "in use at exit" -e "total heap" -e "All heap" -e "ERROR" 
+
+printf "\n\n\n\nwith restricted infile\n"
+touch infile outfile
+chmod 000 infile
+
+valgrind --leak-check=full --show-leak-kinds=all ./pipex infile "ls -l" "wc -l" outfile 
+
+
 
 
 printf "\n\n\n\nwith wrong cmd2\n"
@@ -700,7 +706,19 @@ touch infile outfile
 
 
 valgrind --leak-check=full --show-leak-kinds=all ./pipex infile "ls -l" "hjkfhk" outfile 
-grep -e "in use at exit" -e "total heap" -e "All heap" -e "ERROR" 
+
+
+
+rm -rf outfile
+rm -rf infile
+
+
+printf "\n\n\n\nwith wrong cmd1\n"
+touch infile outfile
+
+
+valgrind --leak-check=full --show-leak-kinds=all ./pipex infile "grgh" "hjkfhk" outfile 
+
 
 
 rm -rf outfile

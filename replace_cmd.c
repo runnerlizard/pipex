@@ -9,11 +9,13 @@ int get_next_line(char **line, int fd)
 
 	rd = 0;
 	i = 0;
-	buffer = malloc(100);
+	buffer = ft_calloc(10, 10);
 	*line = buffer;
 	while ((rd = read(fd, &ch, 1)) > 0 && ch != '\n')
 		buffer[i++] = ch;
 	buffer[i] = '\0';
+	if (ft_strlen(buffer) == 0)
+		free(buffer);
 	return (rd);
 }
 
@@ -45,23 +47,26 @@ static char	**get_new(char *path, char **cmd)
 	int		i;
 	char	**new;
 
-	i = 1;
-	while (cmd[i++])
-		;
 	//ft_printf("path %s, cmd2 %s\n", path, cmd[0]);
-	i++;
-	new = malloc(sizeof(char *) * i);
 	if (path != NULL)
+	{
+		i = 1;
+		while (cmd[i++])
+			;
+		i++;
+		new = ft_calloc(sizeof(char *), i);
 		new[0] = path;
+		i = 0;
+		while (cmd[++i])
+		{
+			//ft_printf("%d  %s\n", ft_strlen(cmd[i]), cmd[i]);
+			new[i] = ft_strjoin("", cmd[i]);
+			//ft_printf("new[i] %s i  %d\n", new[i], i);
+		}
+		new[i] = NULL;
+	}
 	else
 		return (NULL);
-	i = 0;
-	while (cmd[++i])
-	{
-		new[i] = malloc(sizeof(char) * ft_strlen(cmd[i]));
-		ft_strlcpy(new[i], cmd[i], ft_strlen(cmd[i]) + 1);
-	}
-	new[i] = NULL;
 	return (new);
 }
 
