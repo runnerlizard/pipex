@@ -30,7 +30,7 @@ else
     printf 'Test 1 without infile and outfile - \e[1;31mKO\n\e[0m'
 fi
 
-exit 1
+
 rm -rf infile || true
 rm -rf outfile || true
 rm -rf temporary || true
@@ -302,7 +302,6 @@ else
     printf 'Test 8 with wrong cmd2 - \e[1;31mKO\n\e[0m'
 fi
 
-exit 1
 rm -rf infile || true
 rm -rf outfile || truerm -rf temporary || true
 rm -rf temporary || true
@@ -679,7 +678,7 @@ rm -rf outfile || true
 valgrind --leak-check=full --show-leak-kinds=all ./pipex infile "ls -l" "wc -l" outfile 
 grep -e "in use at exit" -e "total heap" -e "All heap" -e "ERROR" 
 
-
+exit 1
 printf "\n\n\n\nwith infile and outfile\n"
 touch infile outfile
 

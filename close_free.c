@@ -44,9 +44,9 @@ void	close_and_free(char *s, t_pipex *p, char *message, int cmd)
 			free_eto(s[i], p);
 		else if (s[i] == '4')
 			unlink("clucotmpfile");
-		else if (s[i] == '5')
+		else if ((s[i] == '5') && (p->file1 > 0))
 			close(p->file1);
-		else if (s[i] == '6')
+		else if ((s[i] == '6') && (p->file2 > 0))
 			close(p->file2);
 		if (s[i] == '0')
 			exit(1);

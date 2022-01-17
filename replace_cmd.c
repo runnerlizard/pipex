@@ -48,9 +48,10 @@ static char	**get_new(char *path, char **cmd)
 	i = 1;
 	while (cmd[i++])
 		;
+	//ft_printf("path %s, cmd2 %s\n", path, cmd[0]);
 	i++;
 	new = malloc(sizeof(char *) * i);
-	if (path == NULL)
+	if (path != NULL)
 		new[0] = path;
 	else
 		return (NULL);
