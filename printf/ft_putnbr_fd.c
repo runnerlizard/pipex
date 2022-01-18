@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cluco <cluco@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/18 18:29:54 by cluco             #+#    #+#             */
+/*   Updated: 2022/01/18 18:29:54 by cluco            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-int	ft_putnbr_fd (unsigned int n)
+int	ft_putnbr_fd(unsigned int n)
 {
 	unsigned int	i;
 	unsigned int	d;
@@ -29,7 +41,7 @@ int	ft_putnbr_fd (unsigned int n)
 	return (count);
 }
 
-int	ft_print_sign (int n)
+int	ft_print_sign(int n)
 {
 	unsigned int	d;
 	char			c;

@@ -677,6 +677,7 @@ rm -rf outfile || true
 
 valgrind --leak-check=full --show-leak-kinds=all ./pipex infile "ls -l" "wc -l" outfile 
 
+exit 1
 
 printf "\n\n\n\nwith infile and outfile\n"
 touch infile outfile

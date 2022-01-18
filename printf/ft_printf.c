@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cluco <cluco@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/18 18:27:35 by cluco             #+#    #+#             */
+/*   Updated: 2022/01/18 18:27:35 by cluco            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 void	ft_write_hex(unsigned long d, int registr)
@@ -29,7 +41,7 @@ int	ft_hex_length(unsigned long n)
 	return (i);
 }
 
-int	ft_hex (unsigned long n, int registr)
+int	ft_hex(unsigned long n, int registr)
 {
 	unsigned long			d;
 	int						i;
@@ -55,7 +67,7 @@ int	ft_hex (unsigned long n, int registr)
 	return (count);
 }
 
-int	ft_print_p (unsigned long p)
+int	ft_print_p(unsigned long p)
 {
 	int			count;
 
@@ -63,7 +75,7 @@ int	ft_print_p (unsigned long p)
 	return (count);
 }
 
-int	ft_printf (const char *input, ...)
+int	ft_printf(const char *input, ...)
 {
 	int			i;
 	va_list		vl;

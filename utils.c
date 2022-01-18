@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cluco <cluco@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/18 18:10:01 by cluco             #+#    #+#             */
+/*   Updated: 2022/01/18 18:26:36 by cluco            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
-int get_next_line(char **line, int fd)
+int	get_next_line(char **line, int fd)
 {
 	int		rd;
 	int		i;
@@ -11,8 +23,12 @@ int get_next_line(char **line, int fd)
 	i = 0;
 	buffer = ft_calloc(10, 10);
 	*line = buffer;
-	while ((rd = read(fd, &ch, 1)) > 0 && ch != '\n')
+	rd = read(fd, &ch, 1);
+	while ((rd) > 0 && ch != '\n')
+	{
 		buffer[i++] = ch;
+		rd = read(fd, &ch, 1);
+	}
 	buffer[i] = '\0';
 	if (ft_strlen(buffer) == 0)
 		free(buffer);
@@ -21,19 +37,19 @@ int get_next_line(char **line, int fd)
 
 void	launch_which(char *cmd, char **env, t_pipex *p)
 {
-    char    *args[3];
+	char	*args[3];
 
-    args[0] = "which";
+	args[0] = "which";
 	args[1] = cmd;
-    args[2] = NULL;
-    if (dup2(p->tmp_fd, 1) < 0)
-        close_and_free("1234560", p, "clucotmpfile", 0);
-    execve("/usr/bin/which", args, env);
+	args[2] = NULL;
+	if (dup2(p->tmp_fd, 1) < 0)
+		close_and_free("4561230", p, "clucotmpfile", 0);
+	execve("/usr/bin/which", args, env);
 	free(args[1]);
-	close_and_free("30", p, "whichchild", 0);
+	close_and_free("4561230", p, "whichchild", 0);
 }
 
-static void realloc_cmd(t_pipex *p, char **new, int n)
+static void	realloc_cmd(t_pipex *p, char **new, int n)
 {
 	int		j;
 	char	**tmp;

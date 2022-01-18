@@ -6,14 +6,13 @@
 /*   By: cluco <cluco@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 19:22:05 by cluco             #+#    #+#             */
-/*   Updated: 2022/01/16 18:13:34 by cluco            ###   ########.fr       */
+/*   Updated: 2022/01/18 18:18:50 by cluco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-
-static void free_eto(char s, t_pipex *p)
+static void	free_eto(char s, t_pipex *p)
 {
 	int	j;
 
@@ -66,15 +65,18 @@ void	close_and_free(char *s, t_pipex *p, char *message, int cmd)
 	}
 }
 
-static t_pipex *malloc_p(char **argv)
+static t_pipex	*malloc_p(char **argv)
 {
 	t_pipex	*p;
 
-	if (!(p = malloc(sizeof(*p))))
+	p = malloc(sizeof(*p));
+	if (!(p))
 		perror("malloc1");
-	if (!(p->cmd1 = ft_split(argv[2], ' ')))
+	p->cmd1 = ft_split(argv[2], ' ');
+	if (!(p->cmd1))
 		close_and_free("30", p, "malloc2", 0);
-	if (!(p->cmd2 = ft_split(argv[3], ' ')))
+	p->cmd2 = ft_split(argv[3], ' ');
+	if (!(p->cmd2))
 		close_and_free("130", p, "malloc3", 0);
 	p->file2 = open(argv[4], O_TRUNC | O_CREAT | O_WRONLY, 0664);
 	p->file1 = open(argv[1], O_RDONLY);
@@ -84,7 +86,7 @@ static t_pipex *malloc_p(char **argv)
 int	main(int argc, char *argv[], char **env)
 {
 	t_pipex	*p;
-	
+
 	if (argc != 5)
 		return (ft_printf("Must be 4 arguments!"));
 	p = malloc_p(argv);
