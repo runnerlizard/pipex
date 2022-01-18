@@ -6,7 +6,7 @@
 /*   By: cluco <cluco@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 19:22:05 by cluco             #+#    #+#             */
-/*   Updated: 2022/01/18 18:18:50 by cluco            ###   ########.fr       */
+/*   Updated: 2022/01/18 19:28:12 by cluco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static t_pipex	*malloc_p(char **argv)
 
 	p = malloc(sizeof(*p));
 	if (!(p))
-		perror("malloc1");
+		close_and_free("0", p, "malloc1", 0);
 	p->cmd1 = ft_split(argv[2], ' ');
 	if (!(p->cmd1))
 		close_and_free("30", p, "malloc2", 0);
@@ -91,12 +91,12 @@ int	main(int argc, char *argv[], char **env)
 		return (ft_printf("Must be 4 arguments!"));
 	p = malloc_p(argv);
 	if (pipe(p->fd))
-		close_and_free("1230", p, "pipe", 0);
+		close_and_free("561230", p, "pipe", 0);
 	p->pid1 = fork();
 	if (p->pid1 == 0)
 		cmd1(p, env, argv);
 	else if (p->pid1 > 0)
 		cmd2(p, env, argv);
 	else
-		close_and_free("1230", p, "fork1", 0);
+		close_and_free("561230", p, "fork1", 0);
 }

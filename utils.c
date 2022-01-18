@@ -6,7 +6,7 @@
 /*   By: cluco <cluco@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 18:10:01 by cluco             #+#    #+#             */
-/*   Updated: 2022/01/18 18:26:36 by cluco            ###   ########.fr       */
+/*   Updated: 2022/01/18 19:29:43 by cluco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	launch_which(char *cmd, char **env, t_pipex *p)
 	if (dup2(p->tmp_fd, 1) < 0)
 		close_and_free("4561230", p, "clucotmpfile", 0);
 	execve("/usr/bin/which", args, env);
-	free(args[1]);
 	close_and_free("4561230", p, "whichchild", 0);
 }
 

@@ -666,7 +666,7 @@ rm -rf infile || true
 rm -rf outfile || true
 rm -rf temporary || true
 
-
+exit 1
 #################   VALGRIND  ############################
 
 printf "===============VALGRIND==================="
@@ -675,9 +675,8 @@ printf "\n\n\nwithout infile and outfile\n"
 rm -rf infile || true
 rm -rf outfile || true
 
-valgrind --leak-check=full --show-leak-kinds=all ./pipex infile "ls -l" "wc -l" outfile 
+valgrind --leak-check=full ./pipex infile "ls -l" "wc -l" outfile 
 
-exit 1
 
 printf "\n\n\n\nwith infile and outfile\n"
 touch infile outfile
